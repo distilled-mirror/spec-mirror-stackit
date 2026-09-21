@@ -1,0 +1,410 @@
+[
+  {
+    "service": "alb",
+    "version": "v2",
+    "path": "services/alb/v2/alb.json",
+    "output": "alb.json",
+    "openapi": "3.0.3",
+    "paths": 7
+  },
+  {
+    "service": "alb-waf",
+    "version": "v1",
+    "path": "services/alb-waf/v1/alb-waf.json",
+    "output": "alb_waf.json",
+    "openapi": "3.0.3",
+    "paths": 7
+  },
+  {
+    "service": "authorization",
+    "version": "v2",
+    "path": "services/authorization/v2/authorization.json",
+    "output": "authorization.json",
+    "openapi": "3.0.3",
+    "paths": 8
+  },
+  {
+    "service": "automation",
+    "version": "v1beta",
+    "path": "services/automation/v1beta/automation.json",
+    "output": "automation.json",
+    "openapi": "3.0.3",
+    "paths": 6
+  },
+  {
+    "service": "cdn",
+    "version": "v1",
+    "path": "services/cdn/v1/cdn.json",
+    "output": "cdn.json",
+    "openapi": "3.0.4",
+    "paths": 10
+  },
+  {
+    "service": "certificates",
+    "version": "v2",
+    "path": "services/certificates/v2/certificates.json",
+    "output": "certificates.json",
+    "openapi": "3.0.3",
+    "paths": 3
+  },
+  {
+    "service": "cost",
+    "version": "v3",
+    "path": "services/cost/v3/cost.json",
+    "output": "cost.json",
+    "openapi": "3.0.0",
+    "paths": 3
+  },
+  {
+    "service": "dns",
+    "version": "v1",
+    "path": "services/dns/v1/dns.json",
+    "output": "dns.json",
+    "openapi": "3.0.1",
+    "paths": 16
+  },
+  {
+    "service": "dremio",
+    "version": "v1beta",
+    "path": "services/dremio/v1beta/dremio.json",
+    "output": "dremio.json",
+    "openapi": "3.0.3",
+    "paths": 4
+  },
+  {
+    "service": "edge",
+    "version": "v1beta1",
+    "path": "services/edge/v1beta1/edge.json",
+    "output": "edge.json",
+    "openapi": "3.0.3",
+    "paths": 9
+  },
+  {
+    "service": "functions",
+    "version": "v1alpha",
+    "path": "services/functions/v1alpha/functions.json",
+    "output": "functions.json",
+    "openapi": "3.0.3",
+    "paths": 6
+  },
+  {
+    "service": "git",
+    "version": "v1beta",
+    "path": "services/git/v1beta/git.json",
+    "output": "git.json",
+    "openapi": "3.0.3",
+    "paths": 9
+  },
+  {
+    "service": "iaas",
+    "version": "v2",
+    "path": "services/iaas/v2/iaas.json",
+    "output": "iaas.json",
+    "openapi": "3.0.1",
+    "paths": 73
+  },
+  {
+    "service": "intake",
+    "version": "v1beta",
+    "path": "services/intake/v1beta/intake.json",
+    "output": "intake.json",
+    "openapi": "3.0.3",
+    "paths": 6
+  },
+  {
+    "service": "kms",
+    "version": "v1",
+    "path": "services/kms/v1/kms.json",
+    "output": "kms.json",
+    "openapi": "3.0.3",
+    "paths": 19
+  },
+  {
+    "service": "lb-ip-lists",
+    "version": "v1alpha",
+    "path": "services/lb-ip-lists/v1alpha/lb-ip-lists.json",
+    "output": "lb_ip_lists.json",
+    "openapi": "3.0.3",
+    "paths": 3
+  },
+  {
+    "service": "load-balancer",
+    "version": "v2",
+    "path": "services/load-balancer/v2/load-balancer.json",
+    "output": "load_balancer.json",
+    "openapi": "3.0.3",
+    "paths": 7
+  },
+  {
+    "service": "logme",
+    "version": "v2",
+    "path": "services/logme/v2/logme.json",
+    "output": "logme.json",
+    "openapi": "3.0.3",
+    "paths": 13
+  },
+  {
+    "service": "logs",
+    "version": "v1",
+    "path": "services/logs/v1/logs.json",
+    "output": "logs.json",
+    "openapi": "3.0.3",
+    "paths": 7
+  },
+  {
+    "service": "mariadb",
+    "version": "v2",
+    "path": "services/mariadb/v2/mariadb.json",
+    "output": "mariadb.json",
+    "openapi": "3.0.3",
+    "paths": 13
+  },
+  {
+    "service": "model-experiments",
+    "version": "v1",
+    "path": "services/model-experiments/v1/model-experiments.json",
+    "output": "model_experiments.json",
+    "openapi": "3.0.3",
+    "paths": 4
+  },
+  {
+    "service": "model-serving",
+    "version": "v1",
+    "path": "services/model-serving/v1/model-serving.json",
+    "output": "model_serving.json",
+    "openapi": "3.0.3",
+    "paths": 5
+  },
+  {
+    "service": "mongodb-flex",
+    "version": "v2",
+    "path": "services/mongodb-flex/v2/mongodb-flex.json",
+    "output": "mongodb_flex.json",
+    "openapi": "3.0.1",
+    "paths": 15
+  },
+  {
+    "service": "object-storage",
+    "version": "v2",
+    "path": "services/object-storage/v2/object-storage.json",
+    "output": "object_storage.json",
+    "openapi": "3.0.2",
+    "paths": 11
+  },
+  {
+    "service": "observability",
+    "version": "v1",
+    "path": "services/observability/v1/observability.json",
+    "output": "observability.json",
+    "openapi": "3.0.1",
+    "paths": 51
+  },
+  {
+    "service": "opensearch",
+    "version": "v2",
+    "path": "services/opensearch/v2/opensearch.json",
+    "output": "opensearch.json",
+    "openapi": "3.0.3",
+    "paths": 13
+  },
+  {
+    "service": "pim",
+    "version": "v2",
+    "path": "services/pim/v2/pim.json",
+    "output": "pim.json",
+    "openapi": "3.0.1",
+    "paths": 14
+  },
+  {
+    "service": "postgres-flex",
+    "version": "v3",
+    "path": "services/postgres-flex/v3/postgres-flex.json",
+    "output": "postgres_flex.json",
+    "openapi": "3.0.1",
+    "paths": 15
+  },
+  {
+    "service": "pubsub",
+    "version": "v1beta",
+    "path": "services/pubsub/v1beta/pubsub.json",
+    "output": "pubsub.json",
+    "openapi": "3.0.3",
+    "paths": 6
+  },
+  {
+    "service": "rabbitmq",
+    "version": "v2",
+    "path": "services/rabbitmq/v2/rabbitmq.json",
+    "output": "rabbitmq.json",
+    "openapi": "3.0.3",
+    "paths": 13
+  },
+  {
+    "service": "redis",
+    "version": "v2",
+    "path": "services/redis/v2/redis.json",
+    "output": "redis.json",
+    "openapi": "3.0.3",
+    "paths": 13
+  },
+  {
+    "service": "registry",
+    "version": "v1",
+    "path": "services/registry/v1/registry.json",
+    "output": "registry.json",
+    "openapi": "3.0.3",
+    "paths": 3
+  },
+  {
+    "service": "resource-manager",
+    "version": "v0",
+    "path": "services/resource-manager/v0/resource-manager.json",
+    "output": "resource_manager.json",
+    "openapi": "3.0.3",
+    "paths": 9
+  },
+  {
+    "service": "run-command",
+    "version": "v2",
+    "path": "services/run-command/v2/run-command.json",
+    "output": "run_command.json",
+    "openapi": "3.0.0",
+    "paths": 4
+  },
+  {
+    "service": "sca",
+    "version": "v1alpha",
+    "path": "services/sca/v1alpha/sca.json",
+    "output": "sca.json",
+    "openapi": "3.0.3",
+    "paths": 8
+  },
+  {
+    "service": "scf",
+    "version": "v1",
+    "path": "services/scf/v1/scf.json",
+    "output": "scf.json",
+    "openapi": "3.0.3",
+    "paths": 15
+  },
+  {
+    "service": "secrets-manager",
+    "version": "v1",
+    "path": "services/secrets-manager/v1/secrets-manager.json",
+    "output": "secrets_manager.json",
+    "openapi": "3.0.3",
+    "paths": 10
+  },
+  {
+    "service": "server-backup",
+    "version": "v2",
+    "path": "services/server-backup/v2/server-backup.json",
+    "output": "server_backup.json",
+    "openapi": "3.0.0",
+    "paths": 9
+  },
+  {
+    "service": "server-update",
+    "version": "v2",
+    "path": "services/server-update/v2/server-update.json",
+    "output": "server_update.json",
+    "openapi": "3.0.0",
+    "paths": 6
+  },
+  {
+    "service": "service-account",
+    "version": "v2",
+    "path": "services/service-account/v2/service-account.json",
+    "output": "service_account.json",
+    "openapi": "3.0.0",
+    "paths": 8
+  },
+  {
+    "service": "service-enablement",
+    "version": "v2",
+    "path": "services/service-enablement/v2/service-enablement.json",
+    "output": "service_enablement.json",
+    "openapi": "3.0.3",
+    "paths": 2
+  },
+  {
+    "service": "sfs",
+    "version": "v1",
+    "path": "services/sfs/v1/sfs.json",
+    "output": "sfs.json",
+    "openapi": "3.0.3",
+    "paths": 14
+  },
+  {
+    "service": "ske",
+    "version": "v2",
+    "path": "services/ske/v2/ske.json",
+    "output": "ske.json",
+    "openapi": "3.0.1",
+    "paths": 12
+  },
+  {
+    "service": "sqlserverflex",
+    "version": "v3",
+    "path": "services/sqlserverflex/v3/sqlserverflex.json",
+    "output": "sqlserverflex.json",
+    "openapi": "3.0.1",
+    "paths": 20
+  },
+  {
+    "service": "stackit-marketplace",
+    "version": "v1",
+    "path": "services/stackit-marketplace/v1/stackit-marketplace.json",
+    "output": "stackit_marketplace.json",
+    "openapi": "3.0.3",
+    "paths": 11
+  },
+  {
+    "service": "telemetry-link",
+    "version": "v1",
+    "path": "services/telemetry-link/v1/telemetry-link.json",
+    "output": "telemetry_link.json",
+    "openapi": "3.0.3",
+    "paths": 9
+  },
+  {
+    "service": "telemetry-router",
+    "version": "v1",
+    "path": "services/telemetry-router/v1/telemetry-router.json",
+    "output": "telemetry_router.json",
+    "openapi": "3.0.3",
+    "paths": 6
+  },
+  {
+    "service": "ufw",
+    "version": "v1",
+    "path": "services/ufw/v1/ufw.json",
+    "output": "ufw.json",
+    "openapi": "3.0.3",
+    "paths": 5
+  },
+  {
+    "service": "valkey",
+    "version": "v2",
+    "path": "services/valkey/v2/valkey.json",
+    "output": "valkey.json",
+    "openapi": "3.0.3",
+    "paths": 13
+  },
+  {
+    "service": "vpn",
+    "version": "v1",
+    "path": "services/vpn/v1/vpn.json",
+    "output": "vpn.json",
+    "openapi": "3.0.3",
+    "paths": 12
+  },
+  {
+    "service": "workflows",
+    "version": "v1alpha",
+    "path": "services/workflows/v1alpha/workflows.json",
+    "output": "workflows.json",
+    "openapi": "3.0.3",
+    "paths": 8
+  }
+]

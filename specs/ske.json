@@ -1,0 +1,3816 @@
+{
+  "components": {
+    "schemas": {
+      "ACL": {
+        "example": {
+          "allowedCidrs": [
+            "allowedCidrs",
+            "allowedCidrs",
+            "allowedCidrs",
+            "allowedCidrs",
+            "allowedCidrs"
+          ],
+          "enabled": true
+        },
+        "properties": {
+          "allowedCidrs": {
+            "description": "Array of CIDRs to allow access to the kubernetes API.",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "type": "array"
+          },
+          "enabled": {
+            "description": "Enables the acl extension.",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "allowedCidrs",
+          "enabled"
+        ],
+        "type": "object"
+      },
+      "Access": {
+        "example": {
+          "idp": {
+            "enabled": true,
+            "type": "type"
+          }
+        },
+        "properties": {
+          "idp": {
+            "$ref": "#/components/schemas/IDP"
+          }
+        },
+        "type": "object"
+      },
+      "AccessScope": {
+        "description": "The access scope of the Control Plane. It defines if the Kubernetes control plane is public or only available inside a STACKIT Network Area.\n⚠️ Warning: Changing the access scope on an existing cluster directly impacts its network exposure (e.g., making a private cluster publicly accessible)\n⚠️ Note: This feature is in private preview. Supplying this object is only permitted for enabled accounts. If your account does not have access, the request will be rejected.",
+        "enum": [
+          "PUBLIC",
+          "SNA"
+        ],
+        "type": "string"
+      },
+      "ApplicationLoadBalancer": {
+        "example": {
+          "enabled": true
+        },
+        "properties": {
+          "enabled": {
+            "description": "Enables the application load balancer extension.\n⚠️ Note: This feature is in private preview. Enabling application load balancer extension is only possible for enabled accounts. Otherwise the request will be rejected.",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "enabled"
+        ],
+        "type": "object"
+      },
+      "Audit": {
+        "example": {
+          "enabled": true
+        },
+        "properties": {
+          "enabled": {
+            "description": "Enable cluster audit log forwarding to a Telemetry Router.\n⚠️ Note: This feature is in private preview. Enabling audit logging is only possible for enabled accounts. Otherwise the request will be rejected.",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "enabled"
+        ],
+        "type": "object"
+      },
+      "AvailabilityZone": {
+        "example": {
+          "name": "name"
+        },
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "CNI": {
+        "description": "CNI to use for the cluster. Only one type of CNI can be used. The type of CNI is immutable after creation. Defaults to calico",
+        "example": {
+          "calico": "{}"
+        },
+        "properties": {
+          "calico": {
+            "description": "configuration options for the Calico CNI",
+            "type": "object",
+            "x-stackit-sdk": {
+              "schema-name": "CalicoConfig"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "CRI": {
+        "example": {
+          "name": "containerd"
+        },
+        "properties": {
+          "name": {
+            "enum": [
+              "containerd"
+            ],
+            "title": "Name of the cri library",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "CalicoConfig": {
+        "description": "configuration options for the Calico CNI",
+        "type": "object"
+      },
+      "Cluster": {
+        "example": {
+          "access": {
+            "idp": {
+              "enabled": true,
+              "type": "type"
+            }
+          },
+          "audit": {
+            "enabled": true
+          },
+          "extensions": {
+            "acl": {
+              "allowedCidrs": [
+                "allowedCidrs",
+                "allowedCidrs",
+                "allowedCidrs",
+                "allowedCidrs",
+                "allowedCidrs"
+              ],
+              "enabled": true
+            },
+            "applicationLoadBalancer": {
+              "enabled": true
+            },
+            "dns": {
+              "enabled": true,
+              "gatewayApi": true,
+              "zones": [
+                "zones",
+                "zones",
+                "zones",
+                "zones",
+                "zones"
+              ]
+            },
+            "observability": {
+              "enabled": true,
+              "instanceId": "instanceId"
+            }
+          },
+          "hibernation": {
+            "schedules": [
+              {
+                "end": "end",
+                "start": "start",
+                "timezone": "timezone"
+              },
+              {
+                "end": "end",
+                "start": "start",
+                "timezone": "timezone"
+              }
+            ]
+          },
+          "kubernetes": {
+            "version": "version"
+          },
+          "labels": {
+            "environment": "prod"
+          },
+          "maintenance": {
+            "autoUpdate": {
+              "kubernetesVersion": true,
+              "machineImageVersion": true
+            },
+            "timeWindow": {
+              "end": "2000-01-23T04:56:07Z",
+              "start": "2000-01-23T04:56:07Z"
+            }
+          },
+          "name": "name",
+          "network": {
+            "cni": {
+              "calico": "{}"
+            },
+            "controlPlane": {
+              "accessScope": "PUBLIC"
+            },
+            "id": "id"
+          },
+          "nodepools": [
+            {
+              "allowSystemComponents": true,
+              "availabilityZones": [
+                "eu01-1",
+                "eu01-2"
+              ],
+              "cri": {
+                "name": "containerd"
+              },
+              "kubernetes": {
+                "version": "version"
+              },
+              "labels": {
+                "key": "labels"
+              },
+              "machine": {
+                "image": {
+                  "name": "name",
+                  "version": "version"
+                },
+                "type": "type"
+              },
+              "maxSurge": 2,
+              "maxUnavailable": 1,
+              "maximum": 10,
+              "minimum": 2,
+              "name": "name",
+              "taints": [
+                {
+                  "effect": "NoSchedule",
+                  "key": "key",
+                  "value": "value"
+                },
+                {
+                  "effect": "NoSchedule",
+                  "key": "key",
+                  "value": "value"
+                }
+              ],
+              "volume": {
+                "size": 50,
+                "type": "type"
+              }
+            },
+            {
+              "allowSystemComponents": true,
+              "availabilityZones": [
+                "eu01-1",
+                "eu01-2"
+              ],
+              "cri": {
+                "name": "containerd"
+              },
+              "kubernetes": {
+                "version": "version"
+              },
+              "labels": {
+                "key": "labels"
+              },
+              "machine": {
+                "image": {
+                  "name": "name",
+                  "version": "version"
+                },
+                "type": "type"
+              },
+              "maxSurge": 2,
+              "maxUnavailable": 1,
+              "maximum": 10,
+              "minimum": 2,
+              "name": "name",
+              "taints": [
+                {
+                  "effect": "NoSchedule",
+                  "key": "key",
+                  "value": "value"
+                },
+                {
+                  "effect": "NoSchedule",
+                  "key": "key",
+                  "value": "value"
+                }
+              ],
+              "volume": {
+                "size": 50,
+                "type": "type"
+              }
+            },
+            {
+              "allowSystemComponents": true,
+              "availabilityZones": [
+                "eu01-1",
+                "eu01-2"
+              ],
+              "cri": {
+                "name": "containerd"
+              },
+              "kubernetes": {
+                "version": "version"
+              },
+              "labels": {
+                "key": "labels"
+              },
+              "machine": {
+                "image": {
+                  "name": "name",
+                  "version": "version"
+                },
+                "type": "type"
+              },
+              "maxSurge": 2,
+              "maxUnavailable": 1,
+              "maximum": 10,
+              "minimum": 2,
+              "name": "name",
+              "taints": [
+                {
+                  "effect": "NoSchedule",
+                  "key": "key",
+                  "value": "value"
+                },
+                {
+                  "effect": "NoSchedule",
+                  "key": "key",
+                  "value": "value"
+                }
+              ],
+              "volume": {
+                "size": 50,
+                "type": "type"
+              }
+            },
+            {
+              "allowSystemComponents": true,
+              "availabilityZones": [
+                "eu01-1",
+                "eu01-2"
+              ],
+              "cri": {
+                "name": "containerd"
+              },
+              "kubernetes": {
+                "version": "version"
+              },
+              "labels": {
+                "key": "labels"
+              },
+              "machine": {
+                "image": {
+                  "name": "name",
+                  "version": "version"
+                },
+                "type": "type"
+              },
+              "maxSurge": 2,
+              "maxUnavailable": 1,
+              "maximum": 10,
+              "minimum": 2,
+              "name": "name",
+              "taints": [
+                {
+                  "effect": "NoSchedule",
+                  "key": "key",
+                  "value": "value"
+                },
+                {
+                  "effect": "NoSchedule",
+                  "key": "key",
+                  "value": "value"
+                }
+              ],
+              "volume": {
+                "size": 50,
+                "type": "type"
+              }
+            },
+            {
+              "allowSystemComponents": true,
+              "availabilityZones": [
+                "eu01-1",
+                "eu01-2"
+              ],
+              "cri": {
+                "name": "containerd"
+              },
+              "kubernetes": {
+                "version": "version"
+              },
+              "labels": {
+                "key": "labels"
+              },
+              "machine": {
+                "image": {
+                  "name": "name",
+                  "version": "version"
+                },
+                "type": "type"
+              },
+              "maxSurge": 2,
+              "maxUnavailable": 1,
+              "maximum": 10,
+              "minimum": 2,
+              "name": "name",
+              "taints": [
+                {
+                  "effect": "NoSchedule",
+                  "key": "key",
+                  "value": "value"
+                },
+                {
+                  "effect": "NoSchedule",
+                  "key": "key",
+                  "value": "value"
+                }
+              ],
+              "volume": {
+                "size": 50,
+                "type": "type"
+              }
+            }
+          ],
+          "status": {
+            "aggregated": "STATE_HEALTHY",
+            "creationTime": "2000-01-23T04:56:07Z",
+            "credentialsRotation": {
+              "lastCompletionTime": "2000-01-23T04:56:07Z",
+              "lastInitiationTime": "2000-01-23T04:56:07Z",
+              "phase": "NEVER"
+            },
+            "egressAddressRanges": [
+              "192.0.2.1/32"
+            ],
+            "error": {
+              "code": "SKE_UNSPECIFIED",
+              "details": "details",
+              "message": "message"
+            },
+            "errors": [
+              {
+                "code": "code",
+                "message": "message"
+              },
+              {
+                "code": "code",
+                "message": "message"
+              }
+            ],
+            "expiration": {
+              "kubernetes": {
+                "expirationDate": "2000-01-23T04:56:07Z",
+                "version": "version"
+              },
+              "nodepools": [
+                {
+                  "kubernetesExpirationDate": "2000-01-23T04:56:07Z",
+                  "kubernetesVersion": "kubernetesVersion",
+                  "name": "name",
+                  "osExpirationDate": "2000-01-23T04:56:07Z",
+                  "osName": "osName",
+                  "osVersion": "osVersion"
+                },
+                {
+                  "kubernetesExpirationDate": "2000-01-23T04:56:07Z",
+                  "kubernetesVersion": "kubernetesVersion",
+                  "name": "name",
+                  "osExpirationDate": "2000-01-23T04:56:07Z",
+                  "osName": "osName",
+                  "osVersion": "osVersion"
+                }
+              ]
+            },
+            "hibernated": true,
+            "identity": "identity",
+            "podAddressRanges": [
+              "100.64.0.0/14"
+            ],
+            "serviceAccountIssuer": "serviceAccountIssuer"
+          }
+        },
+        "properties": {
+          "access": {
+            "$ref": "#/components/schemas/Access"
+          },
+          "audit": {
+            "$ref": "#/components/schemas/Audit"
+          },
+          "extensions": {
+            "$ref": "#/components/schemas/Extension"
+          },
+          "hibernation": {
+            "$ref": "#/components/schemas/Hibernation"
+          },
+          "kubernetes": {
+            "$ref": "#/components/schemas/Kubernetes"
+          },
+          "labels": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Labels are key-value pairs. Keys may contain domain prefix separated by a slash(/) and must begin with an alphanumerical character. Values may be empty and if not empty, they must begin and end with an alphanumerical character. Keys can be between 1-314 characters long, whereas values can be 0-63 characters long.",
+            "example": {
+              "environment": "prod"
+            },
+            "title": "User-specified labels on the Cluster object",
+            "type": "object"
+          },
+          "maintenance": {
+            "$ref": "#/components/schemas/Maintenance"
+          },
+          "name": {
+            "description": "Use lowercase alphanumeric characters or -, must start and end with an alphanumeric character, and be between 1 and 11 characters long.",
+            "maxLength": 11,
+            "minLength": 1,
+            "pattern": "^[a-z0-9]([a-z0-9-]{0,9}[a-z0-9])?$",
+            "readOnly": true,
+            "type": "string"
+          },
+          "network": {
+            "$ref": "#/components/schemas/Network"
+          },
+          "nodepools": {
+            "items": {
+              "$ref": "#/components/schemas/Nodepool"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "type": "array"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ClusterStatus"
+          }
+        },
+        "required": [
+          "kubernetes",
+          "nodepools"
+        ],
+        "type": "object"
+      },
+      "ClusterError": {
+        "example": {
+          "code": "code",
+          "message": "message"
+        },
+        "properties": {
+          "code": {
+            "description": "Possible values: `\"SKE_INFRA_SNA_NETWORK_NOT_FOUND\"`, `\"SKE_INFRA_SNA_NETWORK_NO_ROUTER\"`, `\"SKE_NODE_NO_VALID_HOST_FOUND\"`, `\"SKE_NODE_MISCONFIGURED_PDB\"`, `\"SKE_NODE_MACHINE_TYPE_NOT_FOUND\"`, `\"SKE_NETWORK_NO_DNS_CONFIGURED\"`, `\"SKE_NETWORK_NO_AVAILABLE_IPS\"`, `\"SKE_NODE_MEMORY_PRESSURE\"`, `\"SKE_NODE_DISK_PRESSURE\"`, `\"SKE_NODE_PID_PRESSURE\"`, `\"SKE_OBSERVABILITY_INSTANCE_NOT_FOUND\"`, `\"SKE_OBSERVABILITY_INSTANCE_NOT_READY\"`, `\"SKE_DNS_ZONE_NOT_FOUND\"`, `\"SKE_SNA_DOES_NOT_SUPPORT_SERVICE_ROUTES\"`, `\"SKE_FETCHING_ERRORS_NOT_POSSIBLE\"`",
+            "title": "Error code",
+            "type": "string",
+            "x-extensible-enum": [
+              "SKE_INFRA_SNA_NETWORK_NOT_FOUND",
+              "SKE_INFRA_SNA_NETWORK_NO_ROUTER",
+              "SKE_NODE_NO_VALID_HOST_FOUND",
+              "SKE_NODE_MISCONFIGURED_PDB",
+              "SKE_NODE_MACHINE_TYPE_NOT_FOUND",
+              "SKE_NETWORK_NO_DNS_CONFIGURED",
+              "SKE_NETWORK_NO_AVAILABLE_IPS",
+              "SKE_NODE_MEMORY_PRESSURE",
+              "SKE_NODE_DISK_PRESSURE",
+              "SKE_NODE_PID_PRESSURE",
+              "SKE_OBSERVABILITY_INSTANCE_NOT_FOUND",
+              "SKE_OBSERVABILITY_INSTANCE_NOT_READY",
+              "SKE_DNS_ZONE_NOT_FOUND",
+              "SKE_SNA_DOES_NOT_SUPPORT_SERVICE_ROUTES",
+              "SKE_FETCHING_ERRORS_NOT_POSSIBLE"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ClusterStatus": {
+        "example": {
+          "aggregated": "STATE_HEALTHY",
+          "creationTime": "2000-01-23T04:56:07Z",
+          "credentialsRotation": {
+            "lastCompletionTime": "2000-01-23T04:56:07Z",
+            "lastInitiationTime": "2000-01-23T04:56:07Z",
+            "phase": "NEVER"
+          },
+          "egressAddressRanges": [
+            "192.0.2.1/32"
+          ],
+          "error": {
+            "code": "SKE_UNSPECIFIED",
+            "details": "details",
+            "message": "message"
+          },
+          "errors": [
+            {
+              "code": "code",
+              "message": "message"
+            },
+            {
+              "code": "code",
+              "message": "message"
+            }
+          ],
+          "expiration": {
+            "kubernetes": {
+              "expirationDate": "2000-01-23T04:56:07Z",
+              "version": "version"
+            },
+            "nodepools": [
+              {
+                "kubernetesExpirationDate": "2000-01-23T04:56:07Z",
+                "kubernetesVersion": "kubernetesVersion",
+                "name": "name",
+                "osExpirationDate": "2000-01-23T04:56:07Z",
+                "osName": "osName",
+                "osVersion": "osVersion"
+              },
+              {
+                "kubernetesExpirationDate": "2000-01-23T04:56:07Z",
+                "kubernetesVersion": "kubernetesVersion",
+                "name": "name",
+                "osExpirationDate": "2000-01-23T04:56:07Z",
+                "osName": "osName",
+                "osVersion": "osVersion"
+              }
+            ]
+          },
+          "hibernated": true,
+          "identity": "identity",
+          "podAddressRanges": [
+            "100.64.0.0/14"
+          ],
+          "serviceAccountIssuer": "serviceAccountIssuer"
+        },
+        "properties": {
+          "aggregated": {
+            "$ref": "#/components/schemas/ClusterStatusState"
+          },
+          "creationTime": {
+            "description": "Format: `2024-02-15T11:06:29Z`",
+            "format": "date-time",
+            "title": "Cluster creation timestamp",
+            "type": "string"
+          },
+          "credentialsRotation": {
+            "$ref": "#/components/schemas/CredentialsRotationState"
+          },
+          "egressAddressRanges": {
+            "description": "The outgoing network ranges (in CIDR notation) of traffic originating from workload on the cluster.",
+            "example": [
+              "192.0.2.1/32"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "error": {
+            "$ref": "#/components/schemas/RuntimeError"
+          },
+          "errors": {
+            "items": {
+              "$ref": "#/components/schemas/ClusterError"
+            },
+            "type": "array"
+          },
+          "expiration": {
+            "$ref": "#/components/schemas/ExpirationStatus"
+          },
+          "hibernated": {
+            "title": "Indicates whether the cluster is currently hibernated",
+            "type": "boolean"
+          },
+          "identity": {
+            "title": "The unique identifier for the cluster",
+            "type": "string"
+          },
+          "podAddressRanges": {
+            "description": "The network ranges (in CIDR notation) used by pods of the cluster.",
+            "example": [
+              "100.64.0.0/14"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "serviceAccountIssuer": {
+            "title": "Service account issuer URL of the cluster",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ClusterStatusState": {
+        "description": "ClusterStatusState holds information about the current state of the Cluster",
+        "enum": [
+          "STATE_HEALTHY",
+          "STATE_CREATING",
+          "STATE_DELETING",
+          "STATE_UNHEALTHY",
+          "STATE_RECONCILING",
+          "STATE_HIBERNATED",
+          "STATE_HIBERNATING",
+          "STATE_WAKINGUP"
+        ],
+        "type": "string"
+      },
+      "CreateKubeconfigPayload": {
+        "properties": {
+          "expirationSeconds": {
+            "format": "int64",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "CreateOrUpdateClusterPayload": {
+        "properties": {
+          "access": {
+            "$ref": "#/components/schemas/Access"
+          },
+          "audit": {
+            "$ref": "#/components/schemas/Audit"
+          },
+          "extensions": {
+            "$ref": "#/components/schemas/Extension"
+          },
+          "hibernation": {
+            "$ref": "#/components/schemas/Hibernation"
+          },
+          "kubernetes": {
+            "$ref": "#/components/schemas/Kubernetes"
+          },
+          "labels": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Labels are key-value pairs. Keys may contain domain prefix separated by a slash(/) and must begin with an alphanumerical character. Values may be empty and if not empty, they must begin and end with an alphanumerical character. Keys can be between 1-314 characters long, whereas values can be 0-63 characters long.",
+            "example": {
+              "environment": "prod"
+            },
+            "title": "User-specified labels on the Cluster object",
+            "type": "object"
+          },
+          "maintenance": {
+            "$ref": "#/components/schemas/Maintenance"
+          },
+          "network": {
+            "$ref": "#/components/schemas/Network"
+          },
+          "nodepools": {
+            "items": {
+              "$ref": "#/components/schemas/Nodepool"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "type": "array"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ClusterStatus"
+          }
+        },
+        "required": [
+          "kubernetes",
+          "nodepools"
+        ],
+        "type": "object"
+      },
+      "CredentialsRotationState": {
+        "example": {
+          "lastCompletionTime": "2000-01-23T04:56:07Z",
+          "lastInitiationTime": "2000-01-23T04:56:07Z",
+          "phase": "NEVER"
+        },
+        "properties": {
+          "lastCompletionTime": {
+            "description": "Format: `2024-02-15T11:06:29Z`",
+            "format": "date-time",
+            "title": "CredentialsRotation last completed at",
+            "type": "string"
+          },
+          "lastInitiationTime": {
+            "description": "Format: `2024-02-15T11:06:29Z`",
+            "format": "date-time",
+            "title": "CredentialsRotation last started at",
+            "type": "string"
+          },
+          "phase": {
+            "description": "Phase of the credentials rotation. `NEVER` indicates that no credentials rotation has been performed using the new credentials rotation endpoints yet.",
+            "enum": [
+              "NEVER",
+              "PREPARING",
+              "PREPARED",
+              "COMPLETING",
+              "COMPLETED"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "DNS": {
+        "example": {
+          "enabled": true,
+          "gatewayApi": true,
+          "zones": [
+            "zones",
+            "zones",
+            "zones",
+            "zones",
+            "zones"
+          ]
+        },
+        "properties": {
+          "enabled": {
+            "description": "Enables the dns extension.",
+            "type": "boolean"
+          },
+          "gatewayApi": {
+            "description": "Enables Gateway API support for ExternalDNS.\nThe CRDs must be installed by the user. Once installed, ExternalDNS will be configured at the next cluster reconcile.",
+            "type": "boolean"
+          },
+          "zones": {
+            "description": "Array of domain filters for ExternalDNS, e.g., *.runs.onstackit.cloud.",
+            "items": {
+              "pattern": "^(([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.)*([a-z0-9]|[a-z0-9][a-z0-9\\-]*[a-z0-9])\\.?$",
+              "type": "string"
+            },
+            "maxItems": 20,
+            "type": "array"
+          }
+        },
+        "required": [
+          "enabled"
+        ],
+        "type": "object"
+      },
+      "ExpirationStatus": {
+        "example": {
+          "kubernetes": {
+            "expirationDate": "2000-01-23T04:56:07Z",
+            "version": "version"
+          },
+          "nodepools": [
+            {
+              "kubernetesExpirationDate": "2000-01-23T04:56:07Z",
+              "kubernetesVersion": "kubernetesVersion",
+              "name": "name",
+              "osExpirationDate": "2000-01-23T04:56:07Z",
+              "osName": "osName",
+              "osVersion": "osVersion"
+            },
+            {
+              "kubernetesExpirationDate": "2000-01-23T04:56:07Z",
+              "kubernetesVersion": "kubernetesVersion",
+              "name": "name",
+              "osExpirationDate": "2000-01-23T04:56:07Z",
+              "osName": "osName",
+              "osVersion": "osVersion"
+            }
+          ]
+        },
+        "properties": {
+          "kubernetes": {
+            "$ref": "#/components/schemas/ExpirationStatusKubernetes"
+          },
+          "nodepools": {
+            "items": {
+              "$ref": "#/components/schemas/ExpirationStatusNodepool"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "ExpirationStatusKubernetes": {
+        "example": {
+          "expirationDate": "2000-01-23T04:56:07Z",
+          "version": "version"
+        },
+        "properties": {
+          "expirationDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ExpirationStatusNodepool": {
+        "example": {
+          "kubernetesExpirationDate": "2000-01-23T04:56:07Z",
+          "kubernetesVersion": "kubernetesVersion",
+          "name": "name",
+          "osExpirationDate": "2000-01-23T04:56:07Z",
+          "osName": "osName",
+          "osVersion": "osVersion"
+        },
+        "properties": {
+          "kubernetesExpirationDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "kubernetesVersion": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "osExpirationDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "osName": {
+            "type": "string"
+          },
+          "osVersion": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Extension": {
+        "example": {
+          "acl": {
+            "allowedCidrs": [
+              "allowedCidrs",
+              "allowedCidrs",
+              "allowedCidrs",
+              "allowedCidrs",
+              "allowedCidrs"
+            ],
+            "enabled": true
+          },
+          "applicationLoadBalancer": {
+            "enabled": true
+          },
+          "dns": {
+            "enabled": true,
+            "gatewayApi": true,
+            "zones": [
+              "zones",
+              "zones",
+              "zones",
+              "zones",
+              "zones"
+            ]
+          },
+          "observability": {
+            "enabled": true,
+            "instanceId": "instanceId"
+          }
+        },
+        "properties": {
+          "acl": {
+            "$ref": "#/components/schemas/ACL"
+          },
+          "applicationLoadBalancer": {
+            "$ref": "#/components/schemas/ApplicationLoadBalancer"
+          },
+          "dns": {
+            "$ref": "#/components/schemas/DNS"
+          },
+          "observability": {
+            "$ref": "#/components/schemas/Observability"
+          }
+        },
+        "type": "object"
+      },
+      "GetProviderOptionsRequestVersionState": {
+        "enum": [
+          "SUPPORTED"
+        ],
+        "type": "string"
+      },
+      "Hibernation": {
+        "example": {
+          "schedules": [
+            {
+              "end": "end",
+              "start": "start",
+              "timezone": "timezone"
+            },
+            {
+              "end": "end",
+              "start": "start",
+              "timezone": "timezone"
+            }
+          ]
+        },
+        "properties": {
+          "schedules": {
+            "items": {
+              "$ref": "#/components/schemas/HibernationSchedule"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "schedules"
+        ],
+        "type": "object"
+      },
+      "HibernationSchedule": {
+        "example": {
+          "end": "end",
+          "start": "start",
+          "timezone": "timezone"
+        },
+        "properties": {
+          "end": {
+            "format": "crontab",
+            "pattern": "(@(annually|yearly|monthly|weekly|daily|hourly|reboot))|(@every (\\d+(ns|us|µs|ms|s|m|h))+)|((((\\d+,)+\\d+|(\\d+(\\/|-)\\d+)|\\d+|\\*) ?){5,7})",
+            "title": "End time of cluster hibernation, in crontab syntax; this is the time the cluster will be woken up",
+            "type": "string"
+          },
+          "start": {
+            "format": "crontab",
+            "pattern": "(@(annually|yearly|monthly|weekly|daily|hourly|reboot))|(@every (\\d+(ns|us|µs|ms|s|m|h))+)|((((\\d+,)+\\d+|(\\d+(\\/|-)\\d+)|\\d+|\\*) ?){5,7})",
+            "title": "Start time of cluster hibernation, in crontab syntax",
+            "type": "string"
+          },
+          "timezone": {
+            "title": "Timezone name corresponding to a file in the IANA Time Zone database (like Go's time.LoadLocation).\nAn example would be \"Europe/Berlin\"",
+            "type": "string"
+          }
+        },
+        "required": [
+          "end",
+          "start"
+        ],
+        "type": "object"
+      },
+      "IDP": {
+        "example": {
+          "enabled": true,
+          "type": "type"
+        },
+        "properties": {
+          "enabled": {
+            "description": "Enable IDP integration for the cluster.",
+            "type": "boolean"
+          },
+          "type": {
+            "description": "Possible values: `\"stackit\"`",
+            "type": "string",
+            "x-extensible-enum": [
+              "stackit"
+            ]
+          }
+        },
+        "required": [
+          "enabled",
+          "type"
+        ],
+        "type": "object"
+      },
+      "IDPKubeconfig": {
+        "example": {
+          "kubeconfig": "kubeconfig"
+        },
+        "properties": {
+          "kubeconfig": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Image": {
+        "description": "For valid names and versions please take a look at [provider-options](#tag/ProviderOptions/operation/SkeService_GetProviderOptions) `machineImages`.",
+        "example": {
+          "name": "name",
+          "version": "version"
+        },
+        "properties": {
+          "name": {
+            "title": "Name of os image",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version of os image",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "version"
+        ],
+        "type": "object"
+      },
+      "Kubeconfig": {
+        "example": {
+          "expirationTimestamp": "2000-01-23T04:56:07Z",
+          "kubeconfig": "kubeconfig"
+        },
+        "properties": {
+          "expirationTimestamp": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "kubeconfig": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Kubernetes": {
+        "description": "For valid versions please take a look at [provider-options](#tag/ProviderOptions/operation/SkeService_GetProviderOptions) `kubernetesVersions`.",
+        "example": {
+          "version": "version"
+        },
+        "properties": {
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Kubernetes version used for the cluster",
+            "type": "string"
+          }
+        },
+        "required": [
+          "version"
+        ],
+        "type": "object"
+      },
+      "KubernetesVersion": {
+        "example": {
+          "expirationDate": "2000-01-23T04:56:07Z",
+          "featureGates": {
+            "key": "featureGates"
+          },
+          "state": "state",
+          "version": "version"
+        },
+        "properties": {
+          "expirationDate": {
+            "format": "date-time",
+            "title": "Expiration date until the version will be supported if known yet",
+            "type": "string"
+          },
+          "featureGates": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "List of feature gates supported by the Kubernetes version",
+            "type": "object"
+          },
+          "state": {
+            "title": "State of the kubernetes version",
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "title": "Kubernetes version",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ListClustersResponse": {
+        "example": {
+          "items": [
+            {
+              "access": {
+                "idp": {
+                  "enabled": true,
+                  "type": "type"
+                }
+              },
+              "audit": {
+                "enabled": true
+              },
+              "extensions": {
+                "acl": {
+                  "allowedCidrs": [
+                    "allowedCidrs",
+                    "allowedCidrs",
+                    "allowedCidrs",
+                    "allowedCidrs",
+                    "allowedCidrs"
+                  ],
+                  "enabled": true
+                },
+                "applicationLoadBalancer": {
+                  "enabled": true
+                },
+                "dns": {
+                  "enabled": true,
+                  "gatewayApi": true,
+                  "zones": [
+                    "zones",
+                    "zones",
+                    "zones",
+                    "zones",
+                    "zones"
+                  ]
+                },
+                "observability": {
+                  "enabled": true,
+                  "instanceId": "instanceId"
+                }
+              },
+              "hibernation": {
+                "schedules": [
+                  {
+                    "end": "end",
+                    "start": "start",
+                    "timezone": "timezone"
+                  },
+                  {
+                    "end": "end",
+                    "start": "start",
+                    "timezone": "timezone"
+                  }
+                ]
+              },
+              "kubernetes": {
+                "version": "version"
+              },
+              "labels": {
+                "environment": "prod"
+              },
+              "maintenance": {
+                "autoUpdate": {
+                  "kubernetesVersion": true,
+                  "machineImageVersion": true
+                },
+                "timeWindow": {
+                  "end": "2000-01-23T04:56:07Z",
+                  "start": "2000-01-23T04:56:07Z"
+                }
+              },
+              "name": "name",
+              "network": {
+                "cni": {
+                  "calico": "{}"
+                },
+                "controlPlane": {
+                  "accessScope": "PUBLIC"
+                },
+                "id": "id"
+              },
+              "nodepools": [
+                {
+                  "allowSystemComponents": true,
+                  "availabilityZones": [
+                    "eu01-1",
+                    "eu01-2"
+                  ],
+                  "cri": {
+                    "name": "containerd"
+                  },
+                  "kubernetes": {
+                    "version": "version"
+                  },
+                  "labels": {
+                    "key": "labels"
+                  },
+                  "machine": {
+                    "image": {
+                      "name": "name",
+                      "version": "version"
+                    },
+                    "type": "type"
+                  },
+                  "maxSurge": 2,
+                  "maxUnavailable": 1,
+                  "maximum": 10,
+                  "minimum": 2,
+                  "name": "name",
+                  "taints": [
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    },
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    }
+                  ],
+                  "volume": {
+                    "size": 50,
+                    "type": "type"
+                  }
+                },
+                {
+                  "allowSystemComponents": true,
+                  "availabilityZones": [
+                    "eu01-1",
+                    "eu01-2"
+                  ],
+                  "cri": {
+                    "name": "containerd"
+                  },
+                  "kubernetes": {
+                    "version": "version"
+                  },
+                  "labels": {
+                    "key": "labels"
+                  },
+                  "machine": {
+                    "image": {
+                      "name": "name",
+                      "version": "version"
+                    },
+                    "type": "type"
+                  },
+                  "maxSurge": 2,
+                  "maxUnavailable": 1,
+                  "maximum": 10,
+                  "minimum": 2,
+                  "name": "name",
+                  "taints": [
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    },
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    }
+                  ],
+                  "volume": {
+                    "size": 50,
+                    "type": "type"
+                  }
+                },
+                {
+                  "allowSystemComponents": true,
+                  "availabilityZones": [
+                    "eu01-1",
+                    "eu01-2"
+                  ],
+                  "cri": {
+                    "name": "containerd"
+                  },
+                  "kubernetes": {
+                    "version": "version"
+                  },
+                  "labels": {
+                    "key": "labels"
+                  },
+                  "machine": {
+                    "image": {
+                      "name": "name",
+                      "version": "version"
+                    },
+                    "type": "type"
+                  },
+                  "maxSurge": 2,
+                  "maxUnavailable": 1,
+                  "maximum": 10,
+                  "minimum": 2,
+                  "name": "name",
+                  "taints": [
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    },
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    }
+                  ],
+                  "volume": {
+                    "size": 50,
+                    "type": "type"
+                  }
+                },
+                {
+                  "allowSystemComponents": true,
+                  "availabilityZones": [
+                    "eu01-1",
+                    "eu01-2"
+                  ],
+                  "cri": {
+                    "name": "containerd"
+                  },
+                  "kubernetes": {
+                    "version": "version"
+                  },
+                  "labels": {
+                    "key": "labels"
+                  },
+                  "machine": {
+                    "image": {
+                      "name": "name",
+                      "version": "version"
+                    },
+                    "type": "type"
+                  },
+                  "maxSurge": 2,
+                  "maxUnavailable": 1,
+                  "maximum": 10,
+                  "minimum": 2,
+                  "name": "name",
+                  "taints": [
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    },
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    }
+                  ],
+                  "volume": {
+                    "size": 50,
+                    "type": "type"
+                  }
+                },
+                {
+                  "allowSystemComponents": true,
+                  "availabilityZones": [
+                    "eu01-1",
+                    "eu01-2"
+                  ],
+                  "cri": {
+                    "name": "containerd"
+                  },
+                  "kubernetes": {
+                    "version": "version"
+                  },
+                  "labels": {
+                    "key": "labels"
+                  },
+                  "machine": {
+                    "image": {
+                      "name": "name",
+                      "version": "version"
+                    },
+                    "type": "type"
+                  },
+                  "maxSurge": 2,
+                  "maxUnavailable": 1,
+                  "maximum": 10,
+                  "minimum": 2,
+                  "name": "name",
+                  "taints": [
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    },
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    }
+                  ],
+                  "volume": {
+                    "size": 50,
+                    "type": "type"
+                  }
+                }
+              ],
+              "status": {
+                "aggregated": "STATE_HEALTHY",
+                "creationTime": "2000-01-23T04:56:07Z",
+                "credentialsRotation": {
+                  "lastCompletionTime": "2000-01-23T04:56:07Z",
+                  "lastInitiationTime": "2000-01-23T04:56:07Z",
+                  "phase": "NEVER"
+                },
+                "egressAddressRanges": [
+                  "192.0.2.1/32"
+                ],
+                "error": {
+                  "code": "SKE_UNSPECIFIED",
+                  "details": "details",
+                  "message": "message"
+                },
+                "errors": [
+                  {
+                    "code": "code",
+                    "message": "message"
+                  },
+                  {
+                    "code": "code",
+                    "message": "message"
+                  }
+                ],
+                "expiration": {
+                  "kubernetes": {
+                    "expirationDate": "2000-01-23T04:56:07Z",
+                    "version": "version"
+                  },
+                  "nodepools": [
+                    {
+                      "kubernetesExpirationDate": "2000-01-23T04:56:07Z",
+                      "kubernetesVersion": "kubernetesVersion",
+                      "name": "name",
+                      "osExpirationDate": "2000-01-23T04:56:07Z",
+                      "osName": "osName",
+                      "osVersion": "osVersion"
+                    },
+                    {
+                      "kubernetesExpirationDate": "2000-01-23T04:56:07Z",
+                      "kubernetesVersion": "kubernetesVersion",
+                      "name": "name",
+                      "osExpirationDate": "2000-01-23T04:56:07Z",
+                      "osName": "osName",
+                      "osVersion": "osVersion"
+                    }
+                  ]
+                },
+                "hibernated": true,
+                "identity": "identity",
+                "podAddressRanges": [
+                  "100.64.0.0/14"
+                ],
+                "serviceAccountIssuer": "serviceAccountIssuer"
+              }
+            },
+            {
+              "access": {
+                "idp": {
+                  "enabled": true,
+                  "type": "type"
+                }
+              },
+              "audit": {
+                "enabled": true
+              },
+              "extensions": {
+                "acl": {
+                  "allowedCidrs": [
+                    "allowedCidrs",
+                    "allowedCidrs",
+                    "allowedCidrs",
+                    "allowedCidrs",
+                    "allowedCidrs"
+                  ],
+                  "enabled": true
+                },
+                "applicationLoadBalancer": {
+                  "enabled": true
+                },
+                "dns": {
+                  "enabled": true,
+                  "gatewayApi": true,
+                  "zones": [
+                    "zones",
+                    "zones",
+                    "zones",
+                    "zones",
+                    "zones"
+                  ]
+                },
+                "observability": {
+                  "enabled": true,
+                  "instanceId": "instanceId"
+                }
+              },
+              "hibernation": {
+                "schedules": [
+                  {
+                    "end": "end",
+                    "start": "start",
+                    "timezone": "timezone"
+                  },
+                  {
+                    "end": "end",
+                    "start": "start",
+                    "timezone": "timezone"
+                  }
+                ]
+              },
+              "kubernetes": {
+                "version": "version"
+              },
+              "labels": {
+                "environment": "prod"
+              },
+              "maintenance": {
+                "autoUpdate": {
+                  "kubernetesVersion": true,
+                  "machineImageVersion": true
+                },
+                "timeWindow": {
+                  "end": "2000-01-23T04:56:07Z",
+                  "start": "2000-01-23T04:56:07Z"
+                }
+              },
+              "name": "name",
+              "network": {
+                "cni": {
+                  "calico": "{}"
+                },
+                "controlPlane": {
+                  "accessScope": "PUBLIC"
+                },
+                "id": "id"
+              },
+              "nodepools": [
+                {
+                  "allowSystemComponents": true,
+                  "availabilityZones": [
+                    "eu01-1",
+                    "eu01-2"
+                  ],
+                  "cri": {
+                    "name": "containerd"
+                  },
+                  "kubernetes": {
+                    "version": "version"
+                  },
+                  "labels": {
+                    "key": "labels"
+                  },
+                  "machine": {
+                    "image": {
+                      "name": "name",
+                      "version": "version"
+                    },
+                    "type": "type"
+                  },
+                  "maxSurge": 2,
+                  "maxUnavailable": 1,
+                  "maximum": 10,
+                  "minimum": 2,
+                  "name": "name",
+                  "taints": [
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    },
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    }
+                  ],
+                  "volume": {
+                    "size": 50,
+                    "type": "type"
+                  }
+                },
+                {
+                  "allowSystemComponents": true,
+                  "availabilityZones": [
+                    "eu01-1",
+                    "eu01-2"
+                  ],
+                  "cri": {
+                    "name": "containerd"
+                  },
+                  "kubernetes": {
+                    "version": "version"
+                  },
+                  "labels": {
+                    "key": "labels"
+                  },
+                  "machine": {
+                    "image": {
+                      "name": "name",
+                      "version": "version"
+                    },
+                    "type": "type"
+                  },
+                  "maxSurge": 2,
+                  "maxUnavailable": 1,
+                  "maximum": 10,
+                  "minimum": 2,
+                  "name": "name",
+                  "taints": [
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    },
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    }
+                  ],
+                  "volume": {
+                    "size": 50,
+                    "type": "type"
+                  }
+                },
+                {
+                  "allowSystemComponents": true,
+                  "availabilityZones": [
+                    "eu01-1",
+                    "eu01-2"
+                  ],
+                  "cri": {
+                    "name": "containerd"
+                  },
+                  "kubernetes": {
+                    "version": "version"
+                  },
+                  "labels": {
+                    "key": "labels"
+                  },
+                  "machine": {
+                    "image": {
+                      "name": "name",
+                      "version": "version"
+                    },
+                    "type": "type"
+                  },
+                  "maxSurge": 2,
+                  "maxUnavailable": 1,
+                  "maximum": 10,
+                  "minimum": 2,
+                  "name": "name",
+                  "taints": [
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    },
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    }
+                  ],
+                  "volume": {
+                    "size": 50,
+                    "type": "type"
+                  }
+                },
+                {
+                  "allowSystemComponents": true,
+                  "availabilityZones": [
+                    "eu01-1",
+                    "eu01-2"
+                  ],
+                  "cri": {
+                    "name": "containerd"
+                  },
+                  "kubernetes": {
+                    "version": "version"
+                  },
+                  "labels": {
+                    "key": "labels"
+                  },
+                  "machine": {
+                    "image": {
+                      "name": "name",
+                      "version": "version"
+                    },
+                    "type": "type"
+                  },
+                  "maxSurge": 2,
+                  "maxUnavailable": 1,
+                  "maximum": 10,
+                  "minimum": 2,
+                  "name": "name",
+                  "taints": [
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    },
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    }
+                  ],
+                  "volume": {
+                    "size": 50,
+                    "type": "type"
+                  }
+                },
+                {
+                  "allowSystemComponents": true,
+                  "availabilityZones": [
+                    "eu01-1",
+                    "eu01-2"
+                  ],
+                  "cri": {
+                    "name": "containerd"
+                  },
+                  "kubernetes": {
+                    "version": "version"
+                  },
+                  "labels": {
+                    "key": "labels"
+                  },
+                  "machine": {
+                    "image": {
+                      "name": "name",
+                      "version": "version"
+                    },
+                    "type": "type"
+                  },
+                  "maxSurge": 2,
+                  "maxUnavailable": 1,
+                  "maximum": 10,
+                  "minimum": 2,
+                  "name": "name",
+                  "taints": [
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    },
+                    {
+                      "effect": "NoSchedule",
+                      "key": "key",
+                      "value": "value"
+                    }
+                  ],
+                  "volume": {
+                    "size": 50,
+                    "type": "type"
+                  }
+                }
+              ],
+              "status": {
+                "aggregated": "STATE_HEALTHY",
+                "creationTime": "2000-01-23T04:56:07Z",
+                "credentialsRotation": {
+                  "lastCompletionTime": "2000-01-23T04:56:07Z",
+                  "lastInitiationTime": "2000-01-23T04:56:07Z",
+                  "phase": "NEVER"
+                },
+                "egressAddressRanges": [
+                  "192.0.2.1/32"
+                ],
+                "error": {
+                  "code": "SKE_UNSPECIFIED",
+                  "details": "details",
+                  "message": "message"
+                },
+                "errors": [
+                  {
+                    "code": "code",
+                    "message": "message"
+                  },
+                  {
+                    "code": "code",
+                    "message": "message"
+                  }
+                ],
+                "expiration": {
+                  "kubernetes": {
+                    "expirationDate": "2000-01-23T04:56:07Z",
+                    "version": "version"
+                  },
+                  "nodepools": [
+                    {
+                      "kubernetesExpirationDate": "2000-01-23T04:56:07Z",
+                      "kubernetesVersion": "kubernetesVersion",
+                      "name": "name",
+                      "osExpirationDate": "2000-01-23T04:56:07Z",
+                      "osName": "osName",
+                      "osVersion": "osVersion"
+                    },
+                    {
+                      "kubernetesExpirationDate": "2000-01-23T04:56:07Z",
+                      "kubernetesVersion": "kubernetesVersion",
+                      "name": "name",
+                      "osExpirationDate": "2000-01-23T04:56:07Z",
+                      "osName": "osName",
+                      "osVersion": "osVersion"
+                    }
+                  ]
+                },
+                "hibernated": true,
+                "identity": "identity",
+                "podAddressRanges": [
+                  "100.64.0.0/14"
+                ],
+                "serviceAccountIssuer": "serviceAccountIssuer"
+              }
+            }
+          ]
+        },
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Cluster"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "LoginKubeconfig": {
+        "example": {
+          "kubeconfig": "kubeconfig"
+        },
+        "properties": {
+          "kubeconfig": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Machine": {
+        "example": {
+          "image": {
+            "name": "name",
+            "version": "version"
+          },
+          "type": "type"
+        },
+        "properties": {
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "type": {
+            "description": "For valid types please take a look at [provider-options](#tag/ProviderOptions/operation/SkeService_GetProviderOptions) `machineTypes`.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "image",
+          "type"
+        ],
+        "type": "object"
+      },
+      "MachineImage": {
+        "example": {
+          "name": "name",
+          "versions": [
+            {
+              "cri": [
+                {
+                  "name": "containerd"
+                },
+                {
+                  "name": "containerd"
+                }
+              ],
+              "expirationDate": "2000-01-23T04:56:07Z",
+              "state": "state",
+              "version": "version"
+            },
+            {
+              "cri": [
+                {
+                  "name": "containerd"
+                },
+                {
+                  "name": "containerd"
+                }
+              ],
+              "expirationDate": "2000-01-23T04:56:07Z",
+              "state": "state",
+              "version": "version"
+            }
+          ]
+        },
+        "properties": {
+          "name": {
+            "title": "Image name",
+            "type": "string"
+          },
+          "versions": {
+            "items": {
+              "$ref": "#/components/schemas/MachineImageVersion"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "MachineImageVersion": {
+        "example": {
+          "cri": [
+            {
+              "name": "containerd"
+            },
+            {
+              "name": "containerd"
+            }
+          ],
+          "expirationDate": "2000-01-23T04:56:07Z",
+          "state": "state",
+          "version": "version"
+        },
+        "properties": {
+          "cri": {
+            "items": {
+              "$ref": "#/components/schemas/CRI"
+            },
+            "title": "supported container runtimes",
+            "type": "array"
+          },
+          "expirationDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "version": {
+            "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+            "title": "Image version",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "MachineType": {
+        "example": {
+          "architecture": "architecture",
+          "cpu": 0,
+          "gpu": 1,
+          "memory": 6,
+          "name": "name"
+        },
+        "properties": {
+          "architecture": {
+            "title": "architecture",
+            "type": "string"
+          },
+          "cpu": {
+            "format": "int32",
+            "title": "number of CPU cores",
+            "type": "integer"
+          },
+          "gpu": {
+            "format": "int32",
+            "title": "number of GPUs",
+            "type": "integer"
+          },
+          "memory": {
+            "format": "int32",
+            "title": "memory in GiB",
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Maintenance": {
+        "example": {
+          "autoUpdate": {
+            "kubernetesVersion": true,
+            "machineImageVersion": true
+          },
+          "timeWindow": {
+            "end": "2000-01-23T04:56:07Z",
+            "start": "2000-01-23T04:56:07Z"
+          }
+        },
+        "properties": {
+          "autoUpdate": {
+            "$ref": "#/components/schemas/MaintenanceAutoUpdate"
+          },
+          "timeWindow": {
+            "$ref": "#/components/schemas/TimeWindow"
+          }
+        },
+        "type": "object"
+      },
+      "MaintenanceAutoUpdate": {
+        "example": {
+          "kubernetesVersion": true,
+          "machineImageVersion": true
+        },
+        "properties": {
+          "kubernetesVersion": {
+            "title": "Flag to enable/disable auto-updates of the Kubernetes version",
+            "type": "boolean"
+          },
+          "machineImageVersion": {
+            "title": "Flag to enable/disable auto-updates of the OS image version",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "Network": {
+        "example": {
+          "cni": {
+            "calico": "{}"
+          },
+          "controlPlane": {
+            "accessScope": "PUBLIC"
+          },
+          "id": "id"
+        },
+        "properties": {
+          "cni": {
+            "$ref": "#/components/schemas/CNI"
+          },
+          "controlPlane": {
+            "$ref": "#/components/schemas/v2ControlPlaneNetwork"
+          },
+          "id": {
+            "title": "ID of the SNA network into which the cluster will be deployed",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Nodepool": {
+        "example": {
+          "allowSystemComponents": true,
+          "availabilityZones": [
+            "eu01-1",
+            "eu01-2"
+          ],
+          "cri": {
+            "name": "containerd"
+          },
+          "kubernetes": {
+            "version": "version"
+          },
+          "labels": {
+            "key": "labels"
+          },
+          "machine": {
+            "image": {
+              "name": "name",
+              "version": "version"
+            },
+            "type": "type"
+          },
+          "maxSurge": 2,
+          "maxUnavailable": 1,
+          "maximum": 10,
+          "minimum": 2,
+          "name": "name",
+          "taints": [
+            {
+              "effect": "NoSchedule",
+              "key": "key",
+              "value": "value"
+            },
+            {
+              "effect": "NoSchedule",
+              "key": "key",
+              "value": "value"
+            }
+          ],
+          "volume": {
+            "size": 50,
+            "type": "type"
+          }
+        },
+        "properties": {
+          "allowSystemComponents": {
+            "description": "This needs to be true for at least one node pool.",
+            "title": "Allow system components to run on this node pool",
+            "type": "boolean"
+          },
+          "availabilityZones": {
+            "example": [
+              "eu01-1",
+              "eu01-2"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "cri": {
+            "$ref": "#/components/schemas/CRI"
+          },
+          "kubernetes": {
+            "$ref": "#/components/schemas/NodepoolKubernetes"
+          },
+          "labels": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "maxProperties": 80,
+            "title": "List of labels attached to all worker nodes of this node pool",
+            "type": "object"
+          },
+          "machine": {
+            "$ref": "#/components/schemas/Machine"
+          },
+          "maxSurge": {
+            "example": 2,
+            "format": "int32",
+            "title": "Maximum number of additional VMs that are created during an update",
+            "type": "integer"
+          },
+          "maxUnavailable": {
+            "example": 1,
+            "format": "int32",
+            "title": "Maximum number of VMs that that can be unavailable during an update",
+            "type": "integer"
+          },
+          "maximum": {
+            "description": "Maximum number of nodes in the pool. During runtime, the cluster will never scale beyond 1000 nodes, even if the total maximum would allow for a larger cluster.",
+            "example": 10,
+            "format": "int32",
+            "maximum": 1000,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "minimum": {
+            "description": "Minimum number of nodes in the pool. The sum of all minima must not exceed 1000.",
+            "example": 2,
+            "format": "int32",
+            "maximum": 1000,
+            "type": "integer"
+          },
+          "name": {
+            "description": "Maximum 15 chars",
+            "title": "Name of the node pool",
+            "type": "string"
+          },
+          "taints": {
+            "items": {
+              "$ref": "#/components/schemas/Taint"
+            },
+            "title": "List of taints for all the worker nodes of this node pool",
+            "type": "array"
+          },
+          "volume": {
+            "$ref": "#/components/schemas/Volume"
+          }
+        },
+        "required": [
+          "availabilityZones",
+          "machine",
+          "maximum",
+          "minimum",
+          "name",
+          "volume"
+        ],
+        "type": "object"
+      },
+      "NodepoolKubernetes": {
+        "example": {
+          "version": "version"
+        },
+        "properties": {
+          "version": {
+            "description": "Override the Kubernetes version for the Kubelet of this Nodepool.\nVersion must be equal or lower than the version of the cluster.\nOnly one minor version difference to the version of the cluster is allowed.\nDowngrade of existing Nodepools is prohibited.",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "Observability": {
+        "example": {
+          "enabled": true,
+          "instanceId": "instanceId"
+        },
+        "properties": {
+          "enabled": {
+            "description": "Enables the Observability extension.",
+            "type": "boolean"
+          },
+          "instanceId": {
+            "description": "Instance ID to choose which Observability instance is used.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "enabled",
+          "instanceId"
+        ],
+        "type": "object"
+      },
+      "ProviderOptions": {
+        "example": {
+          "availabilityZones": [
+            {
+              "name": "name"
+            },
+            {
+              "name": "name"
+            }
+          ],
+          "kubernetesVersions": [
+            {
+              "expirationDate": "2000-01-23T04:56:07Z",
+              "featureGates": {
+                "key": "featureGates"
+              },
+              "state": "state",
+              "version": "version"
+            },
+            {
+              "expirationDate": "2000-01-23T04:56:07Z",
+              "featureGates": {
+                "key": "featureGates"
+              },
+              "state": "state",
+              "version": "version"
+            }
+          ],
+          "machineImages": [
+            {
+              "name": "name",
+              "versions": [
+                {
+                  "cri": [
+                    {
+                      "name": "containerd"
+                    },
+                    {
+                      "name": "containerd"
+                    }
+                  ],
+                  "expirationDate": "2000-01-23T04:56:07Z",
+                  "state": "state",
+                  "version": "version"
+                },
+                {
+                  "cri": [
+                    {
+                      "name": "containerd"
+                    },
+                    {
+                      "name": "containerd"
+                    }
+                  ],
+                  "expirationDate": "2000-01-23T04:56:07Z",
+                  "state": "state",
+                  "version": "version"
+                }
+              ]
+            },
+            {
+              "name": "name",
+              "versions": [
+                {
+                  "cri": [
+                    {
+                      "name": "containerd"
+                    },
+                    {
+                      "name": "containerd"
+                    }
+                  ],
+                  "expirationDate": "2000-01-23T04:56:07Z",
+                  "state": "state",
+                  "version": "version"
+                },
+                {
+                  "cri": [
+                    {
+                      "name": "containerd"
+                    },
+                    {
+                      "name": "containerd"
+                    }
+                  ],
+                  "expirationDate": "2000-01-23T04:56:07Z",
+                  "state": "state",
+                  "version": "version"
+                }
+              ]
+            }
+          ],
+          "machineTypes": [
+            {
+              "architecture": "architecture",
+              "cpu": 0,
+              "gpu": 1,
+              "memory": 6,
+              "name": "name"
+            },
+            {
+              "architecture": "architecture",
+              "cpu": 0,
+              "gpu": 1,
+              "memory": 6,
+              "name": "name"
+            }
+          ],
+          "volumeTypes": [
+            {
+              "name": "name"
+            },
+            {
+              "name": "name"
+            }
+          ]
+        },
+        "properties": {
+          "availabilityZones": {
+            "items": {
+              "$ref": "#/components/schemas/AvailabilityZone"
+            },
+            "type": "array"
+          },
+          "kubernetesVersions": {
+            "items": {
+              "$ref": "#/components/schemas/KubernetesVersion"
+            },
+            "title": "List of available Kubernetes versions",
+            "type": "array"
+          },
+          "machineImages": {
+            "items": {
+              "$ref": "#/components/schemas/MachineImage"
+            },
+            "type": "array"
+          },
+          "machineTypes": {
+            "items": {
+              "$ref": "#/components/schemas/MachineType"
+            },
+            "title": "List of available machine types",
+            "type": "array"
+          },
+          "volumeTypes": {
+            "items": {
+              "$ref": "#/components/schemas/VolumeType"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object"
+      },
+      "RuntimeError": {
+        "example": {
+          "code": "SKE_UNSPECIFIED",
+          "details": "details",
+          "message": "message"
+        },
+        "properties": {
+          "code": {
+            "description": "- Code:    `SKE_UNSPECIFIED`\n  Message: \"An error occurred. Please open a support ticket if this error persists.\"\n- Code:    `SKE_TMP_AUTH_ERROR`\n  Message: \"Authentication failed. This is a temporary error. Please wait while the system recovers.\"\n- Code:    `SKE_QUOTA_EXCEEDED`\n  Message: \"Your project's resource quotas are exhausted. Please make sure your quota is sufficient for the ordered cluster.\"\n- Code:    `SKE_OBSERVABILITY_INSTANCE_NOT_FOUND`\n  Message: \"The provided Observability instance could not be found.\"\n- Code:    `SKE_RATE_LIMITS`\n  Message: \"While provisioning your cluster, request rate limits where incurred. Please wait while the system recovers.\"\n- Code:    `SKE_INFRA_ERROR`\n  Message: \"An error occurred with the underlying infrastructure. Please open a support ticket if this error persists.\"\n- Code:    `SKE_REMAINING_RESOURCES`\n  Message: \"There are remaining Kubernetes resources in your cluster that prevent deletion. Please make sure to remove them.\"\n- Code:    `SKE_CONFIGURATION_PROBLEM`\n  Message: \"A configuration error occurred. Please open a support ticket if this error persists.\"\n- Code:    `SKE_UNREADY_NODES`\n  Message: \"Not all worker nodes are ready. Please open a support ticket if this error persists.\"\n- Code:    `SKE_API_SERVER_ERROR`\n  Message: \"The Kubernetes API server is not reporting readiness. Please open a support ticket if this error persists.\"\n- Code:    `SKE_DNS_ZONE_NOT_FOUND`\n  Message: \"The provided DNS zone for the STACKIT DNS extension could not be found. Please ensure you defined a valid domain that belongs to a STACKIT DNS zone.\"\n",
+            "enum": [
+              "SKE_UNSPECIFIED",
+              "SKE_TMP_AUTH_ERROR",
+              "SKE_QUOTA_EXCEEDED",
+              "SKE_OBSERVABILITY_INSTANCE_NOT_FOUND",
+              "SKE_RATE_LIMITS",
+              "SKE_INFRA_ERROR",
+              "SKE_REMAINING_RESOURCES",
+              "SKE_CONFIGURATION_PROBLEM",
+              "SKE_UNREADY_NODES",
+              "SKE_API_SERVER_ERROR",
+              "SKE_DNS_ZONE_NOT_FOUND"
+            ],
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "title": "Deprecated: use the errors field instead",
+        "type": "object"
+      },
+      "Taint": {
+        "example": {
+          "effect": "NoSchedule",
+          "key": "key",
+          "value": "value"
+        },
+        "properties": {
+          "effect": {
+            "enum": [
+              "NoSchedule",
+              "PreferNoSchedule",
+              "NoExecute"
+            ],
+            "type": "string"
+          },
+          "key": {
+            "title": "Taint key to be applied to a node",
+            "type": "string"
+          },
+          "value": {
+            "title": "Taint value corresponding to the taint key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "effect",
+          "key"
+        ],
+        "type": "object"
+      },
+      "TimeWindow": {
+        "example": {
+          "end": "2000-01-23T04:56:07Z",
+          "start": "2000-01-23T04:56:07Z"
+        },
+        "properties": {
+          "end": {
+            "format": "date-time",
+            "title": "Format: 0000-01-01THH:MM:SS+00:00 e.g. 0000-01-01T24:00:00+00:00",
+            "type": "string"
+          },
+          "start": {
+            "format": "date-time",
+            "title": "Format: 0000-01-01THH:MM:SS+00:00 e.g. 0000-01-01T23:00:00+00:00",
+            "type": "string"
+          }
+        },
+        "required": [
+          "end",
+          "start"
+        ],
+        "type": "object"
+      },
+      "Volume": {
+        "example": {
+          "size": 50,
+          "type": "type"
+        },
+        "properties": {
+          "size": {
+            "example": 50,
+            "format": "int32",
+            "maximum": 10240,
+            "minimum": 20,
+            "title": "Size of volume in GiB",
+            "type": "integer"
+          },
+          "type": {
+            "description": "For valid values please take a look at [provider-options](#tag/ProviderOptions/operation/SkeService_GetProviderOptions) `volumeTypes`.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "size"
+        ],
+        "type": "object"
+      },
+      "VolumeType": {
+        "example": {
+          "name": "name"
+        },
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "v2ControlPlaneNetwork": {
+        "example": {
+          "accessScope": "PUBLIC"
+        },
+        "properties": {
+          "accessScope": {
+            "$ref": "#/components/schemas/AccessScope"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "contact": {
+      "name": "STACKIT Kubernetes Engine (SKE) Team",
+      "url": "https://support.stackit.cloud/servicedesk"
+    },
+    "description": "The SKE API provides endpoints to create, update or delete clusters within STACKIT projects and to trigger further cluster management tasks.",
+    "termsOfService": "https://stackit.de/en/imprint",
+    "title": "STACKIT Kubernetes Engine API",
+    "version": "2.0"
+  },
+  "openapi": "3.0.1",
+  "paths": {
+    "/v2/projects/{projectId}/regions/{region}/clusters": {
+      "get": {
+        "description": "Return a list of Kubernetes clusters in the project specified by `projectId`.",
+        "operationId": "ListClusters",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListClustersResponse"
+                }
+              }
+            },
+            "description": "Request handled successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project not found"
+          }
+        },
+        "summary": "List all clusters",
+        "x-stackit-authorization": {
+          "actions": [
+            "ske.cluster.list"
+          ],
+          "resource-id": "projectId",
+          "resource-id-type": "dynamic",
+          "resource-type": "project",
+          "service-enablement": {
+            "services": [
+              "cloud.stackit.ske"
+            ]
+          }
+        }
+      }
+    },
+    "/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}": {
+      "delete": {
+        "description": "Delete Kubernetes cluster specified by the identifier, belonging to the project specified by `projectId`.",
+        "operationId": "DeleteCluster",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "clusterName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Accepted, deletion of cluster happens asynchronously. The deletion is done as soon as GetCluster returns a 404 code. The progress can be observed in the GetCluster's lastOperation field that contains a progress indicator."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project or cluster not found"
+          }
+        },
+        "summary": "Delete a cluster",
+        "x-stackit-authorization": {
+          "actions": [
+            "ske.cluster.delete"
+          ],
+          "resource-id": "projectId",
+          "resource-id-type": "dynamic",
+          "resource-type": "project",
+          "service-enablement": {
+            "services": [
+              "cloud.stackit.ske"
+            ]
+          }
+        }
+      },
+      "get": {
+        "description": "Get Kubernetes cluster for the specified identifier, belonging to the project specified by `projectId`.",
+        "operationId": "GetCluster",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "clusterName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cluster"
+                }
+              }
+            },
+            "description": "Request handled successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project or cluster not found"
+          }
+        },
+        "summary": "Get a cluster",
+        "x-stackit-authorization": {
+          "actions": [
+            "ske.cluster.get"
+          ],
+          "resource-id": "projectId",
+          "resource-id-type": "dynamic",
+          "resource-type": "project",
+          "service-enablement": {
+            "services": [
+              "cloud.stackit.ske"
+            ]
+          }
+        }
+      },
+      "put": {
+        "description": "Create a new cluster in your project or modify an existing one. To get valid values for certain properties please check the [provider-options](#tag/ProviderOptions/operation/SkeService_GetProviderOptions) endpoint.",
+        "operationId": "CreateOrUpdateCluster",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Use lowercase alphanumeric characters or -, must start and end with an alphanumeric character, and be between 1 and 11 characters long.",
+            "in": "path",
+            "name": "clusterName",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-z0-9]([a-z0-9-]{0,9}[a-z0-9])?$",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateClusterPayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cluster"
+                }
+              }
+            },
+            "description": "Accepted, creation/update of cluster happens asynchronously. The status of the cluster is specified in the status.aggregated field of the response object. After creation of a cluster is triggered, the status is initially `STATE_CREATING` and changes to `STATE_HEALTHY` when the cluster was successfully created."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project not found"
+          }
+        },
+        "summary": "Create or update a cluster",
+        "x-stackit-authorization": {
+          "actions": [
+            "ske.cluster.create"
+          ],
+          "resource-id": "projectId",
+          "resource-id-type": "dynamic",
+          "resource-type": "project",
+          "service-enablement": {
+            "services": [
+              "cloud.stackit.ske"
+            ]
+          }
+        }
+      }
+    },
+    "/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}/complete-credentials-rotation": {
+      "post": {
+        "description": "Complete cluster credentials rotation. This is step 2 of a two-step process. Start the rotation using [start-credentials-rotation](#tag/Credentials/operation/SkeService_StartClusterCredentialsRotation).",
+        "operationId": "CompleteCredentialsRotation",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "clusterName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Accepted, execution happens asynchronously. Use the [get cluster](#tag/Cluster/operation/SkeService_GetCluster) endpoint to get the status of the operation from `status.credentialsRotation`."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project or cluster not found"
+          }
+        },
+        "summary": "Complete cluster credentials rotation",
+        "x-stackit-authorization": {
+          "actions": [
+            "ske.cluster.credential.rotate"
+          ],
+          "resource-id": "projectId",
+          "resource-id-type": "dynamic",
+          "resource-type": "project",
+          "service-enablement": {
+            "services": [
+              "cloud.stackit.ske"
+            ]
+          }
+        }
+      }
+    },
+    "/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}/hibernate": {
+      "post": {
+        "description": "Trigger immediate hibernation of the cluster. If the cluster is already in hibernation state, this endpoint does nothing.",
+        "operationId": "TriggerHibernate",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "clusterName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Accepted, execution happens asynchronously. Use the [get cluster](#tag/Cluster/operation/SkeService_GetCluster) endpoint to get the status of the cluster via `status.aggregated`."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project or cluster not found"
+          }
+        },
+        "summary": "Trigger cluster hibernation",
+        "x-stackit-authorization": {
+          "actions": [
+            "ske.cluster.hibernate"
+          ],
+          "resource-id": "projectId",
+          "resource-id-type": "dynamic",
+          "resource-type": "project",
+          "service-enablement": {
+            "services": [
+              "cloud.stackit.ske"
+            ]
+          }
+        }
+      }
+    },
+    "/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}/kubeconfig": {
+      "post": {
+        "description": "Create a new admin kubeconfig for the cluster. You can specify the expiration (in seconds) in the request body. Its value must be in the range from 600 (10 min) to 15552000 (6 months). Defaults to 3600.",
+        "operationId": "CreateKubeconfig",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "clusterName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKubeconfigPayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Kubeconfig"
+                }
+              }
+            },
+            "description": "Request handled successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project or cluster not found"
+          }
+        },
+        "summary": "Create an admin kubeconfig",
+        "x-stackit-authorization": {
+          "actions": [
+            "ske.cluster.kubeconfig.create"
+          ],
+          "resource-id": "projectId",
+          "resource-id-type": "dynamic",
+          "resource-type": "project",
+          "service-enablement": {
+            "services": [
+              "cloud.stackit.ske"
+            ]
+          }
+        }
+      }
+    },
+    "/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}/kubeconfig/idp": {
+      "get": {
+        "description": "A kubeconfig retrieved using this endpoint does not contain any credentials and instead obtains valid credentials via the STACKIT CLI. Permissions must be granted to the user beforehand using an admin kubeconfig.",
+        "operationId": "GetIDPKubeconfig",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "clusterName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IDPKubeconfig"
+                }
+              }
+            },
+            "description": "Request handled successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project or cluster not found"
+          }
+        },
+        "summary": "Get a kubeconfig to authenticate via IDP for use with the STACKIT CLI",
+        "x-stackit-authorization": {
+          "actions": [
+            "ske.cluster.kubeconfig.idp.create"
+          ],
+          "resource-id": "projectId",
+          "resource-id-type": "dynamic",
+          "resource-type": "project",
+          "service-enablement": {
+            "services": [
+              "cloud.stackit.ske"
+            ]
+          }
+        }
+      }
+    },
+    "/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}/kubeconfig/login": {
+      "get": {
+        "description": "A admin kubeconfig retrieved using this endpoint does not contain any credentials and instead obtains valid credentials via the STACKIT CLI.",
+        "operationId": "GetLoginKubeconfig",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "clusterName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginKubeconfig"
+                }
+              }
+            },
+            "description": "Request handled successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project or cluster not found"
+          }
+        },
+        "summary": "Get an admin kubeconfig for use with the STACKIT CLI",
+        "x-stackit-authorization": {
+          "actions": [
+            "ske.cluster.kubeconfig.create"
+          ],
+          "resource-id": "projectId",
+          "resource-id-type": "dynamic",
+          "resource-type": "project",
+          "service-enablement": {
+            "services": [
+              "cloud.stackit.ske"
+            ]
+          }
+        }
+      }
+    },
+    "/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}/maintenance": {
+      "post": {
+        "description": "Trigger immediate maintenance of the cluster. The autoUpdate configuration specified in the Maintenance object of the cluster spec defines what is updated during the immediate maintenance operation.",
+        "operationId": "TriggerMaintenance",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "clusterName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Accepted, execution happens asynchronously. Use the [get cluster](#tag/Cluster/operation/SkeService_GetCluster) endpoint to get the status of the cluster via `status.aggregated`."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project or cluster not found"
+          }
+        },
+        "summary": "Trigger cluster maintenance",
+        "x-stackit-authorization": {
+          "actions": [
+            "ske.cluster.maintain"
+          ],
+          "resource-id": "projectId",
+          "resource-id-type": "dynamic",
+          "resource-type": "project",
+          "service-enablement": {
+            "services": [
+              "cloud.stackit.ske"
+            ]
+          }
+        }
+      }
+    },
+    "/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}/reconcile": {
+      "post": {
+        "description": "Trigger immediate reconciliation of the complete cluster without changing the cluster specification.",
+        "operationId": "TriggerReconcile",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "clusterName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Accepted, execution happens asynchronously. Use the [get cluster](#tag/Cluster/operation/SkeService_GetCluster) endpoint to get the status of the cluster via `status.aggregated`."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project or cluster not found"
+          }
+        },
+        "summary": "Trigger cluster reconciliation",
+        "x-stackit-authorization": {
+          "actions": [
+            "ske.cluster.reconcile"
+          ],
+          "resource-id": "projectId",
+          "resource-id-type": "dynamic",
+          "resource-type": "project",
+          "service-enablement": {
+            "services": [
+              "cloud.stackit.ske"
+            ]
+          }
+        }
+      }
+    },
+    "/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}/start-credentials-rotation": {
+      "post": {
+        "description": "Start cluster credentials rotation. This is step 1 of a two-step process. Complete the rotation using [complete-credentials-rotation](#tag/Credentials/operation/SkeService_CompleteClusterCredentialsRotation).",
+        "operationId": "StartCredentialsRotation",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "clusterName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Accepted, execution happens asynchronously. Use the [get cluster](#tag/Cluster/operation/SkeService_GetCluster) endpoint to get the status of the operation from `status.credentialsRotation`."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project or cluster not found"
+          }
+        },
+        "summary": "Start cluster credentials rotation",
+        "x-stackit-authorization": {
+          "actions": [
+            "ske.cluster.credential.rotate"
+          ],
+          "resource-id": "projectId",
+          "resource-id-type": "dynamic",
+          "resource-type": "project",
+          "service-enablement": {
+            "services": [
+              "cloud.stackit.ske"
+            ]
+          }
+        }
+      }
+    },
+    "/v2/projects/{projectId}/regions/{region}/clusters/{clusterName}/wakeup": {
+      "post": {
+        "description": "Trigger immediate wake up of the cluster. If the cluster is already in running state, this endpoint does nothing.",
+        "operationId": "TriggerWakeup",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "clusterName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Accepted, execution happens asynchronously. Use the [get cluster](#tag/Cluster/operation/SkeService_GetCluster) endpoint to get the status of the cluster via `status.aggregated`."
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Project or cluster not found"
+          }
+        },
+        "summary": "Trigger cluster wakeup",
+        "x-stackit-authorization": {
+          "actions": [
+            "ske.cluster.wakeup"
+          ],
+          "resource-id": "projectId",
+          "resource-id-type": "dynamic",
+          "resource-type": "project",
+          "service-enablement": {
+            "services": [
+              "cloud.stackit.ske"
+            ]
+          }
+        }
+      }
+    },
+    "/v2/regions/{region}/provider-options": {
+      "get": {
+        "description": "Returns available Kubernetes versions, availability zones, machine types, OS versions and volume types for the cluster nodes.",
+        "operationId": "ListProviderOptions",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "region",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "versionState",
+            "schema": {
+              "enum": [
+                "SUPPORTED"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProviderOptions"
+                }
+              }
+            },
+            "description": "Request handled successfully"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Invalid request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          }
+        },
+        "summary": "List provider options",
+        "x-stackit-authorization": {
+          "disabled": true
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://ske.api.stackit.cloud",
+      "variables": {
+        "region": {
+          "default": "global"
+        }
+      }
+    }
+  ]
+}

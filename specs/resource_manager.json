@@ -1,0 +1,1945 @@
+{
+  "components": {
+    "examples": {
+      "BadRequest": {
+        "value": {
+          "error": "Bad Request",
+          "message": "Validation of {param-one} failed.",
+          "path": "/path/where/error/occurred",
+          "status": 400,
+          "timeStamp": "2019-08-24T14:15:22Z"
+        }
+      },
+      "Forbidden": {
+        "value": {
+          "error": "Forbidden",
+          "message": "Access to this resource is forbidden.",
+          "path": "/path/where/error/occurred",
+          "status": 403,
+          "timeStamp": "2019-08-24T14:15:22Z"
+        }
+      },
+      "NotFound": {
+        "value": {
+          "error": "Not Found",
+          "message": "{resource} not found.",
+          "path": "/path/where/error/occurred",
+          "status": 404,
+          "timeStamp": "2019-08-24T14:15:22Z"
+        }
+      },
+      "PolicyConflict": {
+        "value": {
+          "error": "Conflict",
+          "message": "Request aborted due conflict.",
+          "path": "/path/where/error/occurred",
+          "status": 409,
+          "timeStamp": "2019-08-24T14:15:22Z"
+        }
+      }
+    },
+    "parameters": {
+      "creation-time-start": {
+        "description": "A timestamp to specify the beginning of the creationTime from which entries should be returned. If not given, defaults to the beginning of time.",
+        "in": "query",
+        "name": "creation-time-start",
+        "schema": {
+          "example": "2021-01-20T00:00:00Z",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "limit": {
+        "description": "The maximum number of projects to return in the response. If not present, an appropriate default will be used. If maximum is exceeded, maximum is used.",
+        "in": "query",
+        "name": "limit",
+        "schema": {
+          "default": 50,
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "member": {
+        "description": "E-Mail address of the user for whom the visible resource containers should be filtered.",
+        "in": "query",
+        "name": "member",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "offset": {
+        "description": "The offset of the first item in the collection to return.",
+        "in": "query",
+        "name": "offset",
+        "schema": {
+          "default": 0,
+          "minimum": 0,
+          "type": "number"
+        }
+      }
+    },
+    "schemas": {
+      "CreateFolderPayload": {
+        "properties": {
+          "containerParentId": {
+            "description": "Identifier of the parent resource container - containerId as well as UUID identifier is supported.",
+            "example": "name-of-parent-173523",
+            "type": "string"
+          },
+          "labels": {
+            "$ref": "#/components/schemas/Labels"
+          },
+          "members": {
+            "description": "The initial members assigned to the project. At least one subject needs to be a user, and not a client or service account.",
+            "items": {
+              "$ref": "#/components/schemas/Member"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "name": {
+            "description": "The name of the folder matching the regex `^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$`.",
+            "example": "My Folder",
+            "pattern": "^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "containerParentId"
+        ],
+        "title": "CreateFolderRequest",
+        "type": "object"
+      },
+      "CreateProjectLabels": {
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "Key-value string pairs attached to a resource container during creation. Certain labels may be enforced via organizational policies.\n\n* **Key:** Must match the regex `[A-ZÄÜÖa-zäüöß0-9_-]{1,64}`\n* **Value:** Must match the regex `^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}`\n* Either a `\"scope\": \"PUBLIC\"` label or a valid `networkArea` label must be provided for project creation.\n* To create a project within a STACKIT Network Area, you must set the label `\"networkArea\": \"<networkAreaID>\"`. \n\n> **Important:** The `networkArea` label is immutable and **cannot be changed** after project creation.",
+        "maxProperties": 100,
+        "title": "Labels",
+        "type": "object"
+      },
+      "CreateProjectPayload": {
+        "properties": {
+          "containerParentId": {
+            "description": "Identifier of the parent resource container - containerId as well as UUID identifier is supported.",
+            "example": "name-of-parent-173523",
+            "type": "string"
+          },
+          "labels": {
+            "$ref": "#/components/schemas/CreateProjectLabels"
+          },
+          "members": {
+            "description": "The initial members assigned to the project. At least one subject needs to be a user, and not a client or service account.",
+            "items": {
+              "$ref": "#/components/schemas/Member"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "name": {
+            "description": "Project name matching the regex `^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$`.",
+            "example": "My first project",
+            "pattern": "^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "containerParentId",
+          "members"
+        ],
+        "title": "CreateProjectRequest",
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "error": {
+            "description": "The reason phrase of the status code.",
+            "example": "Bad Request",
+            "type": "string"
+          },
+          "message": {
+            "description": "Description of the error.",
+            "example": "Validation of {param} failed.",
+            "type": "string"
+          },
+          "path": {
+            "description": "Path which was called.",
+            "example": "/path/where/error/occurred",
+            "type": "string"
+          },
+          "status": {
+            "description": "Http Status Code.",
+            "example": 400,
+            "type": "number"
+          },
+          "timeStamp": {
+            "description": "Timestamp at which the error occurred.",
+            "example": "2019-08-24T14:15:22Z",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "timeStamp",
+          "path",
+          "status",
+          "error",
+          "message"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "FolderResponse": {
+        "properties": {
+          "containerId": {
+            "description": "Globally unique, user-friendly identifier.",
+            "example": "first-folder-158955",
+            "type": "string"
+          },
+          "creationTime": {
+            "description": "Timestamp at which the folder was created.",
+            "example": "2021-08-24T14:15:22Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "folderId": {
+            "description": "Globally unique folder identifier.",
+            "example": "54066bf4-1aff-4f7b-9f83-fb23c348fff3",
+            "format": "uuid",
+            "type": "string"
+          },
+          "labels": {
+            "$ref": "#/components/schemas/Labels"
+          },
+          "name": {
+            "description": "Folder name.",
+            "example": "First Folder",
+            "type": "string"
+          },
+          "parent": {
+            "$ref": "#/components/schemas/Parent"
+          },
+          "updateTime": {
+            "description": "Timestamp at which the folder was last modified.",
+            "example": "2021-08-24T14:15:22Z",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "containerId",
+          "folderId",
+          "creationTime",
+          "updateTime",
+          "parent"
+        ],
+        "title": "FolderResponse",
+        "type": "object"
+      },
+      "GetFolderDetailsResponse": {
+        "properties": {
+          "containerId": {
+            "description": "Globally unique user-friendly identifier.",
+            "example": "first-folder-158955",
+            "type": "string"
+          },
+          "creationTime": {
+            "description": "Timestamp at which the folder was created.",
+            "example": "2021-08-24T14:15:22Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "folderId": {
+            "description": "Globally unique folder identifier.",
+            "example": "54066bf4-1aff-4f7b-9f83-fb23c348fff3",
+            "format": "uuid",
+            "type": "string"
+          },
+          "labels": {
+            "$ref": "#/components/schemas/Labels"
+          },
+          "name": {
+            "description": "Folder name.",
+            "example": "First Folder",
+            "type": "string"
+          },
+          "parent": {
+            "$ref": "#/components/schemas/Parent"
+          },
+          "parents": {
+            "$ref": "#/components/schemas/ParentList"
+          },
+          "updateTime": {
+            "description": "Timestamp at which the folder was last modified.",
+            "example": "2021-08-24T14:15:22Z",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "containerId",
+          "folderId",
+          "creationTime",
+          "updateTime",
+          "parent"
+        ],
+        "title": "GetFolderDetailsResponse",
+        "type": "object"
+      },
+      "GetProjectResponse": {
+        "properties": {
+          "containerId": {
+            "description": "Globally unique identifier.",
+            "example": "my-first-project-45789",
+            "type": "string"
+          },
+          "creationTime": {
+            "description": "Timestamp at which the project was created.",
+            "example": "2021-08-24T14:15:22Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "labels": {
+            "$ref": "#/components/schemas/Labels"
+          },
+          "lifecycleState": {
+            "$ref": "#/components/schemas/LifecycleState"
+          },
+          "name": {
+            "description": "Project name.",
+            "example": "My first project",
+            "type": "string"
+          },
+          "parent": {
+            "$ref": "#/components/schemas/Parent"
+          },
+          "parents": {
+            "$ref": "#/components/schemas/ParentList"
+          },
+          "projectId": {
+            "description": "Globally unique identifier.",
+            "example": "54066bf4-1aff-4f7b-9f66-fb23c348fee3",
+            "format": "uuid",
+            "type": "string"
+          },
+          "updateTime": {
+            "description": "Timestamp at which the project was last modified.",
+            "example": "2021-08-24T14:15:22Z",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "parent",
+          "containerId",
+          "projectId",
+          "lifecycleState",
+          "updateTime",
+          "creationTime"
+        ],
+        "title": "GetProjectDetailsResponse",
+        "type": "object"
+      },
+      "Labels": {
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "Key-value string pairs attached to an existing resource container. Certain labels may be enforced via organizational policies.\n\n* **Key:** Must match the regex `[A-ZÄÜÖa-zäüöß0-9_-]{1,64}`\n* **Value:** Must match the regex `^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}`\n\n> Note: Additional naming restrictions may apply depending on your specific organization.*",
+        "maxProperties": 100,
+        "title": "Labels",
+        "type": "object"
+      },
+      "LifecycleState": {
+        "description": "Lifecycle state of the resource container.\n\n| LIFECYCLE STATE | DESCRIPTION |\n|----------|--------------------|\n| CREATING | The creation process has been triggered. The state remains until resource manager gets notified about successful process completion. |\n| ACTIVE   | Resource container can be fully used. |\n| INACTIVE | Resource container usage has been disabled. |\n| DELETING | The deletion process has been triggered. The state remains until resource manager gets notified about successful process completion. Afterwards, the record will be deleted. |",
+        "enum": [
+          "CREATING",
+          "ACTIVE",
+          "DELETING",
+          "INACTIVE"
+        ],
+        "example": "CREATING",
+        "title": "LifecycleState",
+        "type": "string"
+      },
+      "Limit": {
+        "default": 50,
+        "description": "The maximum number of projects to return in the response. If not present, an appropriate default will be used.",
+        "maximum": 100,
+        "minimum": 0,
+        "title": "Limit",
+        "type": "number"
+      },
+      "ListFoldersResponse": {
+        "properties": {
+          "items": {
+            "items": {
+              "properties": {
+                "containerId": {
+                  "description": "Globally unique folder identifier.",
+                  "example": "first-folder-158955",
+                  "type": "string"
+                },
+                "creationTime": {
+                  "description": "Timestamp at which the folder was created.",
+                  "example": "2020-08-24T14:15:22Z",
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "folderId": {
+                  "description": "Globally unique folder identifier.",
+                  "example": "54066bf4-1aff-4f7b-9f83-fb23c348fff3",
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "labels": {
+                  "$ref": "#/components/schemas/Labels"
+                },
+                "name": {
+                  "description": "Name of the folder.",
+                  "example": "My Folder",
+                  "type": "string"
+                },
+                "parent": {
+                  "$ref": "#/components/schemas/Parent"
+                },
+                "updateTime": {
+                  "description": "Timestamp at which the folder was created.",
+                  "example": "2020-08-24T14:15:22Z",
+                  "format": "date-time",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "parent",
+                "containerId",
+                "folderId",
+                "creationTime",
+                "updateTime"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "$ref": "#/components/schemas/Limit"
+          },
+          "offset": {
+            "$ref": "#/components/schemas/Offset"
+          }
+        },
+        "required": [
+          "items",
+          "offset",
+          "limit"
+        ],
+        "title": "ListFoldersResponse",
+        "type": "object"
+      },
+      "ListOrganizationsResponse": {
+        "properties": {
+          "items": {
+            "items": {
+              "properties": {
+                "containerId": {
+                  "description": "Globally unique, user-friendly identifier.",
+                  "example": "my-organization-156846",
+                  "type": "string"
+                },
+                "creationTime": {
+                  "description": "Timestamp at which the organization was created.",
+                  "example": "2021-08-24T14:15:22Z",
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "labels": {
+                  "$ref": "#/components/schemas/Labels"
+                },
+                "lifecycleState": {
+                  "$ref": "#/components/schemas/LifecycleState"
+                },
+                "name": {
+                  "description": "Name of the organization.",
+                  "example": "My Organization",
+                  "type": "string"
+                },
+                "organizationId": {
+                  "description": "Globally unique, organization identifier.",
+                  "example": "54066bf4-2bff-4f7b-9f83-fb23c348fee3",
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "updateTime": {
+                  "description": "Timestamp at which the organization was last modified.",
+                  "example": "2021-08-24T14:15:22Z",
+                  "format": "date-time",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "containerId",
+                "organizationId",
+                "lifecycleState",
+                "creationTime",
+                "updateTime"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "$ref": "#/components/schemas/Limit"
+          },
+          "offset": {
+            "$ref": "#/components/schemas/Offset"
+          }
+        },
+        "required": [
+          "items",
+          "offset",
+          "limit"
+        ],
+        "title": "ListOrganizationsResponse",
+        "type": "object"
+      },
+      "ListProjectsResponse": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Project"
+            },
+            "type": "array"
+          },
+          "limit": {
+            "$ref": "#/components/schemas/Limit"
+          },
+          "offset": {
+            "$ref": "#/components/schemas/Offset"
+          }
+        },
+        "required": [
+          "items",
+          "offset",
+          "limit"
+        ],
+        "title": "ListProjectsResponse",
+        "type": "object"
+      },
+      "Member": {
+        "properties": {
+          "role": {
+            "description": "A valid role defined for the resource.",
+            "type": "string"
+          },
+          "subject": {
+            "description": "Unique identifier of the user, service account or client.",
+            "example": "max.musterman@mail.schwarz",
+            "type": "string"
+          }
+        },
+        "required": [
+          "subject",
+          "role"
+        ],
+        "title": "Member",
+        "type": "object"
+      },
+      "Offset": {
+        "default": 0,
+        "description": "The offset of the first item in the collection to return.",
+        "minimum": 0,
+        "title": "Offset",
+        "type": "number"
+      },
+      "OrganizationResponse": {
+        "properties": {
+          "containerId": {
+            "description": "Globally unique, user-friendly identifier.",
+            "example": "my-organization-184629",
+            "type": "string"
+          },
+          "creationTime": {
+            "description": "Timestamp at which the organization was created.",
+            "example": "2021-08-24T14:15:22Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "labels": {
+            "$ref": "#/components/schemas/Labels"
+          },
+          "lifecycleState": {
+            "$ref": "#/components/schemas/LifecycleState"
+          },
+          "name": {
+            "description": "Organization name.",
+            "example": "My Organization",
+            "type": "string"
+          },
+          "organizationId": {
+            "description": "Globally unique, organization identifier.",
+            "example": "54066bf4-2bff-4f7b-9f83-fb23c348fee3",
+            "format": "uuid",
+            "type": "string"
+          },
+          "updateTime": {
+            "description": "Timestamp at which the organization was last modified.",
+            "example": "2021-08-24T14:15:22Z",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "containerId",
+          "organizationId",
+          "lifecycleState",
+          "creationTime",
+          "updateTime"
+        ],
+        "title": "OrganizationResponse",
+        "type": "object"
+      },
+      "Parent": {
+        "description": "Parent container.",
+        "properties": {
+          "containerId": {
+            "description": "User-friendly identifier of either organization or folder (will replace id).",
+            "example": "container-name-Rq86WY1",
+            "type": "string"
+          },
+          "id": {
+            "description": "Identifier of either organization or folder.",
+            "example": "54066bf4-1aff-4f7b-9f83-fb23c348fee3",
+            "format": "uuid",
+            "type": "string"
+          },
+          "type": {
+            "description": "Container type of parent container.",
+            "enum": [
+              "ORGANIZATION",
+              "FOLDER"
+            ],
+            "example": "ORGANIZATION",
+            "type": "string"
+          }
+        },
+        "required": [
+          "containerId",
+          "id",
+          "type"
+        ],
+        "title": "Parent",
+        "type": "object"
+      },
+      "ParentList": {
+        "items": {
+          "properties": {
+            "containerId": {
+              "description": "User-friendly identifier of either organization or folder (will replace id).",
+              "example": "container-name-Rq86WY1",
+              "type": "string"
+            },
+            "containerParentId": {
+              "description": "User-friendly parent identifier of either organization or folder (will replace parentId).",
+              "example": "parent-name-VuUfqh1",
+              "type": "string"
+            },
+            "id": {
+              "description": "Identifier.",
+              "example": "910a3330-8fad-42a7-ab2d-f214633cf047",
+              "format": "uuid",
+              "type": "string"
+            },
+            "name": {
+              "description": "Parent container name.",
+              "example": "My Organization",
+              "type": "string"
+            },
+            "parentId": {
+              "description": "Identifier of the parent resource container.",
+              "example": "54066bf4-1aff-4f7b-9f83-fb23c348fee3",
+              "format": "uuid",
+              "type": "string"
+            },
+            "type": {
+              "description": "Parent container type.",
+              "enum": [
+                "FOLDER",
+                "ORGANIZATION"
+              ],
+              "example": "ORGANIZATION",
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "type",
+            "id",
+            "containerId"
+          ],
+          "type": "object"
+        },
+        "title": "ParentList",
+        "type": "array"
+      },
+      "PartialUpdateFolderPayload": {
+        "properties": {
+          "containerParentId": {
+            "description": "New parent identifier for the resource container - containerId as well as UUID identifier is supported.",
+            "example": "name-of-parent-173523",
+            "type": "string"
+          },
+          "labels": {
+            "$ref": "#/components/schemas/UpdateLabels"
+          },
+          "name": {
+            "description": "New name for the resource container matching the regex `^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$`.",
+            "pattern": "^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$",
+            "type": "string"
+          }
+        },
+        "title": "UpdateFolderRequest",
+        "type": "object"
+      },
+      "PartialUpdateOrganizationPayload": {
+        "properties": {
+          "labels": {
+            "$ref": "#/components/schemas/UpdateLabels"
+          },
+          "name": {
+            "description": "The new name of the organization matching the regex `^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$`.",
+            "example": "My Organization",
+            "pattern": "^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$",
+            "type": "string"
+          }
+        },
+        "title": "UpdateOrganizationRequest",
+        "type": "object"
+      },
+      "PartialUpdateProjectPayload": {
+        "properties": {
+          "containerParentId": {
+            "description": "New parent identifier for the resource container - containerId as well as UUID identifier is supported.",
+            "example": "name-of-parent-173523",
+            "type": "string"
+          },
+          "labels": {
+            "$ref": "#/components/schemas/UpdateLabels"
+          },
+          "name": {
+            "description": "New name for the resource container matching the regex `^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$`.",
+            "pattern": "^[a-zA-ZäüöÄÜÖ0-9]( ?[a-zA-ZäüöÄÜÖß0-9_+&-]){0,39}$",
+            "type": "string"
+          }
+        },
+        "title": "UpdateProjectRequest",
+        "type": "object"
+      },
+      "Project": {
+        "properties": {
+          "containerId": {
+            "description": "Globally unique, user-friendly identifier.",
+            "example": "my-first-project-45789",
+            "type": "string"
+          },
+          "creationTime": {
+            "description": "Timestamp at which the project was created.",
+            "example": "2021-08-24T14:15:22Z",
+            "format": "date-time",
+            "type": "string"
+          },
+          "labels": {
+            "$ref": "#/components/schemas/Labels"
+          },
+          "lifecycleState": {
+            "$ref": "#/components/schemas/LifecycleState"
+          },
+          "name": {
+            "description": "Project name.",
+            "example": "My first project",
+            "type": "string"
+          },
+          "parent": {
+            "$ref": "#/components/schemas/Parent"
+          },
+          "projectId": {
+            "description": "Globally unique, project identifier.",
+            "example": "54066bf4-1aff-4f7b-9f83-fb23c348fee3",
+            "format": "uuid",
+            "type": "string"
+          },
+          "updateTime": {
+            "description": "Timestamp at which the project was last modified.",
+            "example": "2021-08-24T14:15:22Z",
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "parent",
+          "containerId",
+          "projectId",
+          "lifecycleState",
+          "updateTime",
+          "creationTime"
+        ],
+        "title": "ProjectResponse",
+        "type": "object"
+      },
+      "UpdateLabels": {
+        "additionalProperties": {
+          "nullable": true,
+          "type": "string"
+        },
+        "description": "Key-value string pairs attached to an existing resource container. Certain labels may be enforced via organizational policies.\n\nSetting an individual label's value to `null` removes/deletes that label from the resource.\n\n* **Key:** Must match the regex `[A-ZÄÜÖa-zäüöß0-9_-]{1,64}`\n* **Value:** Must match the regex `^$|[A-ZÄÜÖa-zäüöß0-9_-]{1,64}`, or be `null` to delete the label\n\n> Note: Additional naming restrictions may apply depending on your specific organization.*",
+        "title": "Labels",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "contact": {
+      "name": "STACKIT Core Platform",
+      "url": "https://support.stackit.cloud/servicedesk"
+    },
+    "description": "API v2 to manage resource containers - organizations, folders, projects incl. labels\n\n### Resource Management\nSTACKIT resource management handles the terms _Organization_, _Folder_, _Project_, _Label_, and the hierarchical structure between them. Technically, organizations, \nfolders, and projects are _Resource Containers_ to which a _Label_ can be attached to. The STACKIT _Resource Manager_ provides CRUD endpoints to query and to modify the state.\n\n### Organizations\nSTACKIT organizations are the base element to create and to use cloud-resources. An organization is bound to one customer account. Organizations have a lifecycle.\n- Organizations are always the root node in resource hierarchy and do not have a parent\n\n### Projects\nSTACKIT projects are needed to use cloud-resources. Projects serve as wrapper for underlying technical structures and processes. Projects have a lifecycle. Projects compared to folders may have different policies.\n- Projects are optional, but mandatory for cloud-resource usage\n- A project can be created having either an organization, or a folder as parent\n- A project must not have a project as parent\n- Project names under the same parent must not be unique\n- Root organization cannot be changed\n\n### Label\nSTACKIT labels are key-value pairs including a resource container reference. Labels can be defined and attached freely to resource containers by which resources can be organized and queried.\n- Policy-based, immutable labels may exists",
+    "termsOfService": "https://www.stackit.de/en/general-terms-and-conditions/terms-of-use/",
+    "title": "STACKIT Resource Manager API",
+    "version": "2.0"
+  },
+  "openapi": "3.0.3",
+  "paths": {
+    "/v2/folders": {
+      "get": {
+        "description": "Returns all folders and their metadata that: \n- Are children of the specific containerParentId\n- Match the given containerIds\n- User is member of <br />\n\nFilter:\n- Either containerParentId OR containerIds OR member must be passed\n- If containerId and containerParentId are given, both are used for filtering - containers must point to the same parent\n- If member and containerParentId are given, both are used for filtering\n- If member is given, containers must not point to the same container parent\n\nAuthorization & Permissions:\n- When filtering by member: resource-manager.folder.direct.get is evaluated on target folders for the member; if caller differs from target member, system-level resource-manager.folder.get is required.\n- When filtering by containerParentId: resource-manager.folder.list is evaluated on the parent container.\n- When filtering by containerIds: resource-manager.folder.get is evaluated on the parent container of requested folders.\n",
+        "operationId": "ListFolders",
+        "parameters": [
+          {
+            "description": "Identifier of the parent resource container - containerId as well as UUID identifier is supported.",
+            "in": "query",
+            "name": "containerParentId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "List of container identifiers - containerId as well as UUID identifier is supported.",
+            "in": "query",
+            "name": "containerIds",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/member"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/creation-time-start"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListFoldersResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Bad Request": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Conflict": {
+                    "$ref": "#/components/examples/PolicyConflict"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "summary": "Get All Folders",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.folder.direct.get",
+            "resource-manager.folder.list",
+            "resource-manager.folder.get"
+          ]
+        }
+      },
+      "post": {
+        "description": "Creates a new folder within a parent organization or folder.\n\nAuthorization & Permissions:\n- Evaluated on Target Parent Container: resource-manager.folder.create (required permission on the target parent organization or folder to create a folder).",
+        "operationId": "CreateFolder",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFolderPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FolderResponse"
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Bad Request": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Conflict": {
+                    "$ref": "#/components/examples/PolicyConflict"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "summary": "Create Folder",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.folder.create"
+          ]
+        }
+      }
+    },
+    "/v2/folders/{containerId}": {
+      "delete": {
+        "description": "Delete a folder and its metadata.\n- Folder must not contain active child containers unless force deletion is enabled without attached projects.\n\nAuthorization & Permissions:\n- Evaluated on Target Folder: resource-manager.folder.delete (required permission on the target folder to delete it).",
+        "operationId": "DeleteFolder",
+        "parameters": [
+          {
+            "description": "If true, all nested, empty folders are deleted recursively - if no project is attached!",
+            "in": "query",
+            "name": "force",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Deletion process triggered"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Not Found": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Conflict": {
+                    "$ref": "#/components/examples/PolicyConflict"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "summary": "Delete Folder",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.folder.delete"
+          ]
+        }
+      },
+      "get": {
+        "description": "Returns metadata for a specific folder.\n\nAuthorization & Permissions:\n- Evaluated on Target Folder: resource-manager.folder.get (required primary permission to retrieve folder details).\n- Evaluated on Parent Containers: resource-manager.organization.get and resource-manager.folder.get implicitly to resolve parent hierarchy details.",
+        "operationId": "GetFolderDetails",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "includeParents",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetFolderDetailsResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Not Found": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "summary": "Get Folder Details",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.organization.get",
+            "resource-manager.folder.get"
+          ]
+        }
+      },
+      "parameters": [
+        {
+          "description": "Folder identifier - containerId as well as UUID identifier is supported.",
+          "in": "path",
+          "name": "containerId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "patch": {
+        "description": "Update the folder and its metadata (name, labels, parent container).\n\nAuthorization & Permissions:\n- Evaluated on Target Folder: resource-manager.folder.edit (required permission on the target folder to modify its details, labels, or parent).",
+        "operationId": "PartialUpdateFolder",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PartialUpdateFolderPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FolderResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Not Found": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Conflict": {
+                    "$ref": "#/components/examples/PolicyConflict"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "summary": "Update Folder",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.folder.edit"
+          ]
+        }
+      }
+    },
+    "/v2/folders/{containerId}/labels": {
+      "delete": {
+        "description": "Deletes folder labels by specified keys, or removes all labels if no key is provided.\n\nAuthorization & Permissions:\n- Evaluated on Target Folder: resource-manager.folder.edit (required permission on the target folder to delete its labels).",
+        "operationId": "DeleteFolderLabels",
+        "parameters": [
+          {
+            "description": "Label name.",
+            "in": "query",
+            "name": "keys",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Labels removed"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Cannot delete label because of policy": {
+                    "$ref": "#/components/examples/PolicyConflict"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "summary": "Delete Folder Labels",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.folder.edit"
+          ]
+        }
+      },
+      "parameters": [
+        {
+          "description": "Folder identifier - containerId as well as UUID identifier is supported.",
+          "in": "path",
+          "name": "containerId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/v2/organizations": {
+      "get": {
+        "description": "Returns all organizations and their metadata accessible to the caller.\n- Filterable by containerIds or member.\n\nAuthorization & Permissions:\n- Evaluated on Target Organizations: resource-manager.organization.list and/or (depending if containerIDs was used in the request) resource-manager.organization.get to filter and list accessible organizations.",
+        "operationId": "ListOrganizations",
+        "parameters": [
+          {
+            "description": "Organization identifiers - containerId as well as UUID identifier is supported. A combination of both is not allowed.",
+            "in": "query",
+            "name": "containerIds",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/member"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/creation-time-start"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListOrganizationsResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Bad Request": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          }
+        },
+        "summary": "Get all organizations of member",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.organization.get",
+            "resource-manager.organization.list"
+          ]
+        }
+      }
+    },
+    "/v2/organizations/{containerId}/labels": {
+      "delete": {
+        "description": "Deletes organization labels by specified keys, or removes all labels if no key is provided.\n\nAuthorization & Permissions:\n- Evaluated on Target Organization: resource-manager.organization.edit (required permission on the organization to delete labels).",
+        "operationId": "DeleteOrganizationLabels",
+        "parameters": [
+          {
+            "description": "Label name.",
+            "in": "query",
+            "name": "keys",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Labels removed"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Cannot delete label because of policy": {
+                    "$ref": "#/components/examples/PolicyConflict"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "summary": "Delete Organization Labels",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.organization.edit"
+          ]
+        }
+      },
+      "parameters": [
+        {
+          "description": "Organization identifier - containerId as well as UUID identifier is supported.",
+          "in": "path",
+          "name": "containerId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/v2/organizations/{id}": {
+      "get": {
+        "description": "Returns metadata for a specific organization.\n\nAuthorization & Permissions:\n- Evaluated on Target Organization: resource-manager.organization.get (required permission on the organization to view its details).",
+        "operationId": "GetOrganization",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Not Found": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "summary": "Get Organization Details",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.organization.get"
+          ]
+        }
+      },
+      "parameters": [
+        {
+          "description": "Organization identifier - containerId as well as UUID identifier is supported.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "patch": {
+        "description": "Updates organization metadata (name, labels).\n\nAuthorization & Permissions:\n- Evaluated on Target Organization: resource-manager.organization.edit (required permission on the organization to update metadata and labels).",
+        "operationId": "PartialUpdateOrganization",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PartialUpdateOrganizationPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrganizationResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Not Found": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Conflict": {
+                    "$ref": "#/components/examples/PolicyConflict"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "summary": "Update Organization",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.organization.edit"
+          ]
+        }
+      }
+    },
+    "/v2/projects": {
+      "get": {
+        "description": "Returns all projects and their metadata that: \n- Are children of the specific containerParentId\n- Match the given containerIds\n- User is member of\n\nFilter:\n- Either containerParentId OR containerIds OR member must be passed\n- If containerId and containerParentId are given, both are used for filtering - containers must point to the same parent\n- If member and containerParentId are given, both are used for filtering\n- If member is given, containers must not point to the same container parent\n\nAuthorization & Permissions:\n- Evaluated on Target Projects: resource-manager.project.get, resource-manager.project.list, or resource-manager.project.direct.get to filter and return accessible projects.",
+        "operationId": "ListProjects",
+        "parameters": [
+          {
+            "description": "Identifier of the parent resource container - containerId as well as UUID identifier is supported.",
+            "in": "query",
+            "name": "containerParentId",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "List of container identifiers - containerId as well as UUID identifier is supported.",
+            "in": "query",
+            "name": "containerIds",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/member"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/creation-time-start"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListProjectsResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Bad Request": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          }
+        },
+        "summary": "Get All Projects of a member.",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.project.get",
+            "resource-manager.project.list",
+            "resource-manager.project.direct.get"
+          ]
+        }
+      },
+      "post": {
+        "description": "Creates a new project within a parent container.\n- Creation request returns synchronously, while underlying resource provisioning runs asynchronously.\n- Initial lifecycle state is CREATING until provisioning completes.\n\nAuthorization & Permissions:\n- Evaluated on Target Parent Container: resource-manager.project.create (required permission on the target parent organization or folder to create a project).",
+        "operationId": "CreateProject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProjectPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            },
+            "description": "Project created"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Bad Request": {
+                    "$ref": "#/components/examples/BadRequest"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Conflict": {
+                    "$ref": "#/components/examples/PolicyConflict"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "summary": "Create Project",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.project.create"
+          ]
+        }
+      }
+    },
+    "/v2/projects/{containerId}/labels": {
+      "delete": {
+        "description": "Deletes project labels by specified keys, or removes all labels if no key is provided.\n\nAuthorization & Permissions:\n- Evaluated on Target Project: resource-manager.project.edit (required permission on the project to delete its labels).",
+        "operationId": "DeleteProjectLabels",
+        "parameters": [
+          {
+            "description": "Label name.",
+            "in": "query",
+            "name": "keys",
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Labels removed"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Cannot delete label because of policy": {
+                    "$ref": "#/components/examples/PolicyConflict"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "summary": "Delete Project Labels",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.project.edit"
+          ]
+        }
+      },
+      "parameters": [
+        {
+          "description": "Project identifier - containerId as well as UUID identifier is supported.",
+          "in": "path",
+          "name": "containerId",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/v2/projects/{id}": {
+      "delete": {
+        "description": "Triggers the deletion of a project.\n- Request returns synchronously, while deletion process runs asynchronously.\n- Initial lifecycle state is DELETING until workflow completes.\n\nAuthorization & Permissions:\n- Evaluated on Target Project: resource-manager.project.delete (required permission on the project to delete it).",
+        "operationId": "DeleteProject",
+        "responses": {
+          "202": {
+            "description": "Deletion process triggered"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Cannot delete label because of policy": {
+                    "$ref": "#/components/examples/PolicyConflict"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "summary": "Delete Project",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.project.delete"
+          ]
+        }
+      },
+      "get": {
+        "description": "Returns the project and its metadata.\n\nAuthorization & Permissions:\n- Evaluated on Target Project: resource-manager.project.get (required primary permission to view project details).\n- Evaluated on Parent Containers: resource-manager.organization.get and resource-manager.folder.get on parent organizations/folders implicitly to resolve and include parent metadata in the response hierarchy.",
+        "operationId": "GetProject",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "includeParents",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProjectResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Not Found": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "summary": "Get Project Details",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.organization.get",
+            "resource-manager.folder.get",
+            "resource-manager.project.get"
+          ]
+        }
+      },
+      "parameters": [
+        {
+          "description": "Project identifier - containerId as well as UUID identifier is supported.",
+          "in": "path",
+          "name": "id",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "patch": {
+        "description": "Updates project metadata (name, labels, or parent hierarchy).\n\nAuthorization & Permissions:\n- Evaluated on Target Project: resource-manager.project.edit (required permission on the project to modify its details, labels, or parent).",
+        "operationId": "PartialUpdateProject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PartialUpdateProjectPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Forbidden": {
+                    "$ref": "#/components/examples/Forbidden"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Not Found": {
+                    "$ref": "#/components/examples/NotFound"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Conflict": {
+                    "$ref": "#/components/examples/PolicyConflict"
+                  }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Conflict"
+          }
+        },
+        "summary": "Update Project",
+        "x-stackit-authorization": {
+          "disabled": true,
+          "implicit-actions": [
+            "resource-manager.project.edit"
+          ]
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://resource-manager.api.stackit.cloud",
+      "variables": {
+        "region": {
+          "default": "global"
+        }
+      }
+    }
+  ]
+}
