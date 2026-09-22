@@ -25,8 +25,8 @@
   },
   {
     "service": "automation",
-    "version": "v1beta",
-    "path": "services/automation/v1beta/automation.json",
+    "version": "v1",
+    "path": "services/automation/v1/automation.json",
     "output": "automation.json",
     "openapi": "3.0.3",
     "paths": 6

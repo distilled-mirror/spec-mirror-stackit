@@ -583,6 +583,7 @@
     },
     "schemas": {
       "AutomationScheduleTrigger": {
+        "nullable": true,
         "properties": {
           "rrule": {
             "description": "An rrule (Recurrence Rule) is a standardized string format used in iCalendar (RFC 5545) to define repeating events, and you can generate one by using a dedicated library or by using online generator tools to specify parameters like frequency, interval, and end dates",
@@ -595,6 +596,7 @@
         "type": "object"
       },
       "AutomationTriggers": {
+        "nullable": true,
         "properties": {
           "schedule": {
             "$ref": "#/components/schemas/AutomationScheduleTrigger"
@@ -624,12 +626,14 @@
       "CreateVolumeAutomationPayload": {
         "properties": {
           "description": {
+            "nullable": true,
             "type": "string"
           },
           "input": {
             "$ref": "#/components/schemas/VolumeAutomationInput"
           },
           "name": {
+            "nullable": true,
             "type": "string"
           },
           "templateId": {
@@ -705,25 +709,7 @@
         "type": "object"
       },
       "ErrorResponseContentDetails": {
-        "discriminator": {
-          "mapping": {
-            "ErrorInfo": "#/components/schemas/ErrorInfoDetail",
-            "Help": "#/components/schemas/HelpErrorDetail",
-            "LocalizedMessage": "#/components/schemas/LocalizedMessageErrorDetail"
-          },
-          "propertyName": "@type"
-        },
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/ErrorInfoDetail"
-          },
-          {
-            "$ref": "#/components/schemas/LocalizedMessageErrorDetail"
-          },
-          {
-            "$ref": "#/components/schemas/HelpErrorDetail"
-          }
-        ],
+        "additionalProperties": true,
         "properties": {
           "@type": {
             "type": "string"
@@ -964,6 +950,7 @@
         "properties": {
           "description": {
             "example": "Automates daily backups to a specified volume",
+            "nullable": true,
             "type": "string"
           },
           "input": {
@@ -971,6 +958,7 @@
           },
           "name": {
             "example": "Daily Backup Automation",
+            "nullable": true,
             "type": "string"
           },
           "triggers": {
@@ -1044,54 +1032,9 @@
         "type": "object"
       },
       "SnapshotRetentionPolicy": {
-        "discriminator": {
-          "mapping": {
-            "count": "#/components/schemas/SnapshotRetentionPolicyCount",
-            "indefinitely": "#/components/schemas/SnapshotRetentionPolicyIndefinitely"
-          },
-          "propertyName": "kind"
-        },
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/SnapshotRetentionPolicyCount"
-          },
-          {
-            "$ref": "#/components/schemas/SnapshotRetentionPolicyIndefinitely"
-          }
-        ],
-        "required": [
-          "kind"
-        ],
-        "type": "object"
-      },
-      "SnapshotRetentionPolicyCount": {
+        "additionalProperties": true,
         "properties": {
           "kind": {
-            "enum": [
-              "count"
-            ],
-            "example": "count",
-            "type": "string"
-          },
-          "value": {
-            "example": 5,
-            "format": "int32",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "kind",
-          "value"
-        ],
-        "type": "object"
-      },
-      "SnapshotRetentionPolicyIndefinitely": {
-        "properties": {
-          "kind": {
-            "enum": [
-              "indefinitely"
-            ],
-            "example": "indefinitely",
             "type": "string"
           }
         },
@@ -1173,17 +1116,14 @@
         ]
       },
       "VolumeAutomationInput": {
-        "discriminator": {
-          "mapping": {
-            "VolumeRecoveryPointManagement": "#/components/schemas/VolumeRecoveryPointManagementInput"
-          },
-          "propertyName": "kind"
-        },
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/VolumeRecoveryPointManagementInput"
+        "additionalProperties": true,
+        "nullable": true,
+        "properties": {
+          "kind": {
+            "example": "CreateSnapshotsResult",
+            "type": "string"
           }
-        ],
+        },
         "required": [
           "kind"
         ],
@@ -1336,21 +1276,13 @@
         ]
       },
       "VolumeOutputStepResult": {
-        "discriminator": {
-          "mapping": {
-            "CreateSnapshotsResult": "#/components/schemas/CreateSnapshotsResult",
-            "GetVolumeIDsResult": "#/components/schemas/GetVolumeIDsResult"
-          },
-          "propertyName": "kind"
-        },
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/GetVolumeIDsResult"
-          },
-          {
-            "$ref": "#/components/schemas/CreateSnapshotsResult"
+        "additionalProperties": true,
+        "properties": {
+          "kind": {
+            "example": "CreateSnapshotsResult",
+            "type": "string"
           }
-        ],
+        },
         "required": [
           "kind"
         ],
@@ -1425,11 +1357,11 @@
     "description": "API endpoints for automation management .",
     "termsOfService": "https://stackit.de/en/imprint",
     "title": "STACKIT Automation Service API",
-    "version": "1beta.0"
+    "version": "1.0"
   },
   "openapi": "3.0.3",
   "paths": {
-    "/v1beta/projects/{projectId}/regions/{region}/services/volumes/automations": {
+    "/v1/projects/{projectId}/regions/{region}/services/volumes/automations": {
       "get": {
         "description": "Retrieves a list of volume automations.",
         "operationId": "ListVolumeAutomations",
@@ -1693,7 +1625,7 @@
         }
       }
     },
-    "/v1beta/projects/{projectId}/regions/{region}/services/volumes/automations/templates": {
+    "/v1/projects/{projectId}/regions/{region}/services/volumes/automations/templates": {
       "get": {
         "description": "Lists all volume templates for the specified service",
         "operationId": "ListVolumeTemplates",
@@ -1825,7 +1757,7 @@
         }
       }
     },
-    "/v1beta/projects/{projectId}/regions/{region}/services/volumes/automations/templates/{templateId}": {
+    "/v1/projects/{projectId}/regions/{region}/services/volumes/automations/templates/{templateId}": {
       "get": {
         "description": "Retrieve detailed information about a volume template",
         "operationId": "GetVolumeTemplate",
@@ -1953,7 +1885,7 @@
         }
       }
     },
-    "/v1beta/projects/{projectId}/regions/{region}/services/volumes/automations/{automationId}": {
+    "/v1/projects/{projectId}/regions/{region}/services/volumes/automations/{automationId}": {
       "delete": {
         "description": "Deletes a specific volume automation.",
         "operationId": "DeleteVolumeAutomation",
@@ -2337,7 +2269,7 @@
         }
       }
     },
-    "/v1beta/projects/{projectId}/regions/{region}/services/volumes/automations/{automationId}/executions": {
+    "/v1/projects/{projectId}/regions/{region}/services/volumes/automations/{automationId}/executions": {
       "get": {
         "description": "Get a list of all executions for a specific volume automation.",
         "operationId": "ListVolumeExecutions",
@@ -2600,7 +2532,7 @@
         }
       }
     },
-    "/v1beta/projects/{projectId}/regions/{region}/services/volumes/automations/{automationId}/executions/{executionId}": {
+    "/v1/projects/{projectId}/regions/{region}/services/volumes/automations/{automationId}/executions/{executionId}": {
       "get": {
         "description": "Get details for a specific volume automation execution",
         "operationId": "GetVolumeExecution",
