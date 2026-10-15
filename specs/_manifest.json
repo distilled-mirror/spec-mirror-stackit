@@ -93,7 +93,7 @@
     "path": "services/git/v1beta/git.json",
     "output": "git.json",
     "openapi": "3.0.3",
-    "paths": 9
+    "paths": 10
   },
   {
     "service": "iaas",
@@ -141,7 +141,7 @@
     "path": "services/logme/v2/logme.json",
     "output": "logme.json",
     "openapi": "3.0.3",
-    "paths": 13
+    "paths": 15
   },
   {
     "service": "logs",
@@ -157,7 +157,7 @@
     "path": "services/mariadb/v2/mariadb.json",
     "output": "mariadb.json",
     "openapi": "3.0.3",
-    "paths": 13
+    "paths": 15
   },
   {
     "service": "model-experiments",
@@ -205,7 +205,7 @@
     "path": "services/opensearch/v2/opensearch.json",
     "output": "opensearch.json",
     "openapi": "3.0.3",
-    "paths": 13
+    "paths": 15
   },
   {
     "service": "pim",
@@ -237,7 +237,7 @@
     "path": "services/rabbitmq/v2/rabbitmq.json",
     "output": "rabbitmq.json",
     "openapi": "3.0.3",
-    "paths": 13
+    "paths": 15
   },
   {
     "service": "redis",
@@ -245,7 +245,7 @@
     "path": "services/redis/v2/redis.json",
     "output": "redis.json",
     "openapi": "3.0.3",
-    "paths": 13
+    "paths": 15
   },
   {
     "service": "registry",
@@ -389,7 +389,7 @@
     "path": "services/valkey/v2/valkey.json",
     "output": "valkey.json",
     "openapi": "3.0.3",
-    "paths": 13
+    "paths": 15
   },
   {
     "service": "vpn",
