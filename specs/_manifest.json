@@ -61,7 +61,7 @@
     "path": "services/dns/v1/dns.json",
     "output": "dns.json",
     "openapi": "3.0.1",
-    "paths": 16
+    "paths": 18
   },
   {
     "service": "dremio",
