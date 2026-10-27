@@ -273,11 +273,11 @@
   },
   {
     "service": "sca",
-    "version": "v1alpha",
-    "path": "services/sca/v1alpha/sca.json",
+    "version": "v1beta",
+    "path": "services/sca/v1beta/sca.json",
     "output": "sca.json",
     "openapi": "3.0.3",
-    "paths": 8
+    "paths": 10
   },
   {
     "service": "scf",
