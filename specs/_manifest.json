@@ -104,6 +104,14 @@
     "paths": 73
   },
   {
+    "service": "identity",
+    "version": "v1",
+    "path": "services/identity/v1/identity.json",
+    "output": "identity.json",
+    "openapi": "3.0.1",
+    "paths": 5
+  },
+  {
     "service": "intake",
     "version": "v1beta",
     "path": "services/intake/v1beta/intake.json",
