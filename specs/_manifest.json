@@ -93,7 +93,7 @@
     "path": "services/git/v1beta/git.json",
     "output": "git.json",
     "openapi": "3.0.3",
-    "paths": 10
+    "paths": 12
   },
   {
     "service": "iaas",
@@ -102,6 +102,14 @@
     "output": "iaas.json",
     "openapi": "3.0.1",
     "paths": 73
+  },
+  {
+    "service": "identity",
+    "version": "v1",
+    "path": "services/identity/v1/identity.json",
+    "output": "identity.json",
+    "openapi": "3.0.1",
+    "paths": 5
   },
   {
     "service": "intake",
@@ -150,6 +158,14 @@
     "output": "logs.json",
     "openapi": "3.0.3",
     "paths": 7
+  },
+  {
+    "service": "mailout",
+    "version": "v1beta1",
+    "path": "services/mailout/v1beta1/mailout.json",
+    "output": "mailout.json",
+    "openapi": "3.0.3",
+    "paths": 11
   },
   {
     "service": "mariadb",
