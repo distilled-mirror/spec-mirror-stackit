@@ -165,7 +165,7 @@
     "path": "services/mailout/v1beta1/mailout.json",
     "output": "mailout.json",
     "openapi": "3.0.3",
-    "paths": 11
+    "paths": 10
   },
   {
     "service": "mariadb",
