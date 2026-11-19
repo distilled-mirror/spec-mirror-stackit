@@ -293,7 +293,7 @@
     "path": "services/sca/v1beta/sca.json",
     "output": "sca.json",
     "openapi": "3.0.3",
-    "paths": 10
+    "paths": 12
   },
   {
     "service": "scf",
